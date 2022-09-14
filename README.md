@@ -1,6 +1,8 @@
 # About
 
-This is p5.js implementations of sample codes written in [Quarts Composer Book](http://www.bnn.co.jp/books/3645/).
+This is p5.js implementations of sample codes explained in [Quarts Composer Book](http://www.bnn.co.jp/books/3645/).
+
+![](https://raw.githubusercontent.com/hirohitokato/myAssets/main/quartzComposerBook-p5js/volvox.gif)
 
 ## Setup
 
