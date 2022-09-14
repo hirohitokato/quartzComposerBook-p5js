@@ -25,6 +25,21 @@ Then, open `dist/index.html` via any browser. ([Live Server vscode plugin](https
 * All assets are downloaded from [here](http://download.bnn.co.jp/download/qcb/).
 * This repository uses [p5.js Templates(PETR+)](https://fal-works.github.io/p5js-templates/).
 
+## ToDo
+
+* [ ] Patch Time
+* [ ] Math
+* [ ] Round
+* [ ] Random
+* [ ] **3D Transformation**
+* [ ] **Iterator**
+* [ ] Iterator Variables
+* [ ] HSL Color
+* [ ] Image Texturing Properties
+* [ ] Cube
+* [ ] Replicate in Space X/Y/Z
+* [ ] Image with String
+
 ## Special thanks
 
 * Mamoru Kano, the author of the book.
