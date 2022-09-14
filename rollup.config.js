@@ -1,5 +1,7 @@
 // See also: https://rollupjs.org/
 
+import copy from 'rollup-plugin-copy'
+
 const banner = `/**
  * This is a p5.js sketch made with p5js-template-petr-plus.
  *
@@ -17,6 +19,14 @@ const config = {
     interop: "default",
   },
   external: ["p5"],
+  plugins: [
+    copy({
+      targets: [
+        { src: 'src/assets', dest: 'dist/' }
+      ],
+      verbose: true,
+    })
+  ]
 };
 
 export default config;

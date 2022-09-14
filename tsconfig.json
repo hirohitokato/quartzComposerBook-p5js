@@ -1,6 +1,6 @@
 // See also: https://aka.ms/tsconfig.json
 {
-  "include": ["src/"],
+  "include": ["src/", "src/declaration.d.ts"],
 
   "compilerOptions": {
     /* Basic Options */
