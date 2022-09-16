@@ -25,44 +25,44 @@ export const setup = (p: p5): void => {
   p.createCanvas(800, 600);
 
   gradient_background = new Gradient(p);
-  gradient_background.color1.value = p.color(134, 148, 150);
-  gradient_background.color2.value = p.color(32, 56, 56);
-  gradient_background.color3.value = p.color(0);
+  gradient_background.color1.setDefaultValue(p.color(134, 148, 150));
+  gradient_background.color2.setDefaultValue(p.color(32, 56, 56));
+  gradient_background.color3.setDefaultValue(p.color(0));
   gradient_background.direction = GradientDirection.Vertical_UpsideDown;
 
   volvox = new Sprite(p);
-  images["volvox"]?.image.bind(volvox.image);
-  volvox.x_position.value = 100;
+  volvox.image.bind(images["volvox"]!.image);
+  volvox.x_position.setDefaultValue(100);
 
   consumers.push(gradient_background, volvox);
 
   let lfo_x = new LFO(p);
-  lfo_x.type.value = LFOType.Sin;
-  lfo_x.period.value = 10;
-  lfo_x.amplitude.value = 0.5;
-  lfo_x.result.bind(volvox.x_position);
+  lfo_x.type.setDefaultValue(LFOType.Sin);
+  lfo_x.period.setDefaultValue(10);
+  lfo_x.amplitude.setDefaultValue(0.5);
+  volvox.x_position.bind(lfo_x.result);
   providers.push(lfo_x);
 
   let lfo_y = new LFO(p);
-  lfo_y.type.value = LFOType.Cos;
-  lfo_y.period.value = 10;
-  lfo_y.amplitude.value = 0.5;
-  lfo_y.result.bind(volvox.y_position);
+  lfo_y.type.setDefaultValue(LFOType.Cos);
+  lfo_y.period.setDefaultValue(10);
+  lfo_y.amplitude.setDefaultValue(0.5);
+  volvox.y_position.bind(lfo_y.result);
   providers.push(lfo_y);
 
   let lfo_wh = new LFO(p);
-  lfo_wh.type.value = LFOType.Sin;
-  lfo_wh.period.value = 0.1;
-  lfo_wh.amplitude.value = 0.01;
-  lfo_wh.offset.value = 0.8;
-  lfo_wh.result.bind(volvox.widthScale);
-  lfo_wh.result.bind(volvox.heightScale);
+  lfo_wh.type.setDefaultValue(LFOType.Sin);
+  lfo_wh.period.setDefaultValue(0.1);
+  lfo_wh.amplitude.setDefaultValue(0.01);
+  lfo_wh.offset.setDefaultValue(0.8);
+  volvox.widthScale.bind(lfo_wh.result);
+  volvox.heightScale.bind(lfo_wh.result);
   providers.push(lfo_wh);
 
   let interpolation = new Interpolation(p);
-  interpolation.startValue.value = 0;
-  interpolation.endValue.value = 360;
-  interpolation.duration.value = 20;
-  interpolation.result.bind(volvox.z_rotation);
+  interpolation.startValue.setDefaultValue(0);
+  interpolation.endValue.setDefaultValue(360);
+  interpolation.duration.setDefaultValue(20);
+  volvox.z_rotation.bind(interpolation.result);
   providers.push(interpolation);
 };

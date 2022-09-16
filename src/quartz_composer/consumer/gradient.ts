@@ -27,14 +27,13 @@ export class Gradient implements Consumer {
     this.color2pos = new BindableInput(0.5);
   }
 
-  update() {}
-
-  draw() {
+  draw(elapsed: number) {
     let x = 0;
     let y = 0;
     let w = this.p.width;
     let h = this.p.height;
-    let { c1, c2, c3 } = this.getColors();
+    let { c1, c2, c3 } = this.getColors(elapsed);
+    const c2pos = this.color2pos.getValue(elapsed);
 
     this.p.noFill();
 
@@ -43,33 +42,33 @@ export class Gradient implements Consumer {
       this.direction == GradientDirection.Vertical_UpsideDown
     ) {
       // Top to bottom gradient
-      this.drawVGradient(x, w, y, y + h * this.color2pos.value, c1, c2);
-      this.drawVGradient(x, w, h * this.color2pos.value, h, c2, c3);
+      this.drawVGradient(x, w, y, y + h * c2pos, c1, c2);
+      this.drawVGradient(x, w, h * c2pos, h, c2, c3);
     } else if (
       this.direction == GradientDirection.Horizontal_LeftToRight ||
       this.direction == GradientDirection.Horizontal_RightToLeft
     ) {
       // Left to right gradient
-      this.drawHGradient(y, h, x, x * this.color2pos.value, c1, c2);
-      this.drawHGradient(y, h, x * this.color2pos.value, x, c2, c3);
+      this.drawHGradient(y, h, x, x * c2pos, c1, c2);
+      this.drawHGradient(y, h, x * c2pos, x, c2, c3);
     }
   }
 
-  private getColors(): { c1: p5.Color; c2: p5.Color; c3: p5.Color } {
+  private getColors(elapsed: number): { c1: p5.Color; c2: p5.Color; c3: p5.Color } {
     let c1: p5.Color;
-    let c2 = this.color2.value;
+    let c2 = this.color2.getValue(elapsed);
     let c3: p5.Color;
 
     switch (this.direction) {
       case GradientDirection.Vertical_Upside:
       case GradientDirection.Horizontal_LeftToRight:
-        c1 = this.color1.value;
-        c3 = this.color3.value;
+        c1 = this.color1.getValue(elapsed);
+        c3 = this.color3.getValue(elapsed);
         break;
       case GradientDirection.Vertical_UpsideDown:
       case GradientDirection.Horizontal_RightToLeft:
-        c1 = this.color3.value;
-        c3 = this.color1.value;
+        c1 = this.color3.getValue(elapsed);
+        c3 = this.color1.getValue(elapsed);
         break;
     }
     return { c1, c2, c3 };

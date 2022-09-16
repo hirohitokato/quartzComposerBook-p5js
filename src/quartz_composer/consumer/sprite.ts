@@ -15,24 +15,25 @@ export class Sprite implements Consumer {
   widthScale: BindableInput<number> = new BindableInput(1);
   heightScale: BindableInput<number> = new BindableInput(1);
 
-  image: BindableInput<p5.Image> = new BindableInput<p5.Image>();
+  image: BindableInput<p5.Image> = new BindableInput<p5.Image>(new p5.Image());
 
   constructor(private p: p5) {}
 
   updateValue() {}
 
-  draw() {
-    const x = (this.p.width * (this.x_position.value + 1)) / 2;
-    const y = (this.p.height * (this.y_position.value + 1)) / 2;
+  draw(elapsed: number) {
+    const x = (this.p.width * (this.x_position.getValue(elapsed) + 1)) / 2;
+    const y = (this.p.height * (this.y_position.getValue(elapsed) + 1)) / 2;
 
-    const w = this.image.value.width * this.widthScale.value;
-    const h = this.image.value.height * this.heightScale.value;
+    const image = this.image.getValue(elapsed);
+    const w = image.width * this.widthScale.getValue(elapsed);
+    const h = image.height * this.heightScale.getValue(elapsed);
 
     this.p.push();
     this.p.translate(x, y);
-    this.p.rotate(this.p.radians(this.z_rotation.value));
+    this.p.rotate(this.p.radians(this.z_rotation.getValue(elapsed)));
     this.p.imageMode(this.p.CENTER);
-    this.p.image(this.image.value, 0, 0, w, h);
+    this.p.image(image, 0, 0, w, h);
     this.p.pop();
   }
 }

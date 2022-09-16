@@ -41,23 +41,32 @@ export class LFO implements Provider {
     this.offset = new BindableInput(0);
     this.pwmRatio = new BindableInput(0.25);
 
-    this.result = new BindableOutput(0);
-
     this.methods[LFOType.Sin] = this.sinLfo.bind(this);
     this.methods[LFOType.Cos] = this.cosLfo.bind(this);
-  }
 
-  update(elapsedTime: number): void {
-    this.result.value = this.methods[this.type.value]!(elapsedTime);
+    this.result = new BindableOutput(0);
+    this.result.onRequestedValue = (t) => {
+      return this.methods[this.type.getValue(t)]!(t);
+    };
   }
 
   private sinLfo(elapsedTime: number): number {
-    let y = Math.sin(elapsedTime * (Math.PI / this.period.value) + this.phase.value);
-    return y * this.amplitude.value + this.offset.value;
+    const period = this.period.getValue(elapsedTime);
+    const phase = this.phase.getValue(elapsedTime);
+    const amplitude = this.amplitude.getValue(elapsedTime);
+    const offset = this.offset.getValue(elapsedTime);
+
+    let y = Math.sin(elapsedTime * (Math.PI / period) + phase);
+    return y * amplitude + offset;
   }
 
   private cosLfo(elapsedTime: number): number {
-    let y = Math.cos(elapsedTime * (Math.PI / this.period.value) + this.phase.value);
-    return y * this.amplitude.value + this.offset.value;
+    const period = this.period.getValue(elapsedTime);
+    const phase = this.phase.getValue(elapsedTime);
+    const amplitude = this.amplitude.getValue(elapsedTime);
+    const offset = this.offset.getValue(elapsedTime);
+
+    let y = Math.cos(elapsedTime * (Math.PI / period) + phase);
+    return y * amplitude + offset;
   }
 }

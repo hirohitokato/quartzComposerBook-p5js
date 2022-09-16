@@ -1,21 +1,29 @@
+type Subscriber<T> = (newValue: T) => void;
+
 /**
  * Tが同じ型のBindableOutputと接続可能な値保持のための型。
- * BindableOutputの値と同じ値になる
+ * `getValue()`が呼ばれることにより、接続されたBindableOutputから値を取得し返す
  */
 export class BindableInput<T> {
-  protected _value: T | undefined;
+  protected _value: T;
+  private _boundOutput: BindableOutput<T> | undefined;
 
-  constructor(defaultValue: T | undefined = undefined) {
-    // バインドしていない場合のデフォルト値を指定する
+  constructor(defaultValue: T) {
     this._value = defaultValue;
   }
 
-  get value(): T {
-    return this._value!;
+  /** update default value */
+  setDefaultValue(value: T) {
+    this._value = value;
   }
 
-  set value(value: T) {
-    this._value = value;
+  getValue(atTime: number): T {
+    return this._boundOutput?.getValue(atTime) ?? this._value;
+  }
+
+  bind(output: BindableOutput<T>): BindableInput<T> {
+    this._boundOutput = output;
+    return this;
   }
 }
 
@@ -24,29 +32,17 @@ export class BindableInput<T> {
  * `value`プロパティに設定することによりBindableInputに値を流す
  */
 export class BindableOutput<T> {
-  protected _value: T | undefined;
-  protected inputs: BindableInput<T>[];
+  onRequestedValue: ((atTime: number) => T) | undefined;
+  protected _initialValue: T;
 
-  constructor(initialValue: T | undefined = undefined) {
-    this._value = initialValue;
-    this.inputs = [];
+  constructor(initialValue: T) {
+    this._initialValue = initialValue;
   }
 
-  get value(): T {
-    return this._value!;
-  }
-
-  set value(value: T) {
-    this._value = value;
-    this.inputs.forEach((input) => {
-      input.value = value;
-    });
-  }
-
-  bind(input: BindableInput<T>): void {
-    this.inputs.push(input);
-    if (typeof this._value !== "undefined") {
-      input.value = this._value;
+  getValue(atTime: number): T {
+    if (this.onRequestedValue === undefined) {
+      return this._initialValue;
     }
+    return this.onRequestedValue(atTime);
   }
 }

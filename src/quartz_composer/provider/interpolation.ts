@@ -3,10 +3,10 @@ import { BindableInput, BindableOutput } from "../core/bindable";
 import { Provider } from "../core/provider";
 
 export const RepeatMode = {
-  None: "none",
+  None: "none", // not implemented
   Loop: "loop",
   MirroredLoop: "mirroredLoop",
-  MirroredLoopOnce: "mirroredLoopOnce",
+  MirroredLoopOnce: "mirroredLoopOnce", // not implemented
 } as const;
 export type RepeatMode = typeof RepeatMode[keyof typeof RepeatMode];
 
@@ -41,26 +41,29 @@ export class Interpolation implements Provider {
   /** The result of this patch */
   result: BindableOutput<number> = new BindableOutput(0);
 
-  constructor(private p: p5) {}
+  constructor(private p: p5) {
+    this.result.onRequestedValue = this.onRequestedValue.bind(this);
+  }
 
-  update(elapsed: number): void {
-    let duration = this.duration.value;
-    if (
-      this.repeatMode.value == RepeatMode.MirroredLoop ||
-      this.repeatMode.value == RepeatMode.MirroredLoopOnce
-    ) {
+  onRequestedValue(elapsed: number): number {
+    let duration = this.duration.getValue(elapsed);
+    const originalDuration = duration;
+    const repeatMode = this.repeatMode.getValue(elapsed);
+    if (repeatMode == RepeatMode.MirroredLoop || repeatMode == RepeatMode.MirroredLoopOnce) {
       // consider reversed phase
       duration *= 2;
     }
 
     let progress = elapsed % duration;
-    if (progress > this.duration.value) {
-      progress = this.duration.value - (progress - this.duration.value);
+    if (progress > originalDuration) {
+      progress = originalDuration - (progress - originalDuration);
     }
     // 0...1 value
-    progress /= this.duration.value;
+    progress /= originalDuration;
 
-    this.result.value =
-      (this.endValue.value - this.startValue.value) * progress + this.startValue.value;
+    const startValue = this.startValue.getValue(elapsed);
+    const endValue = this.endValue.getValue(elapsed);
+
+    return (endValue - startValue) * progress + startValue;
   }
 }

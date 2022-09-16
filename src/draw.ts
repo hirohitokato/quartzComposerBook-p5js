@@ -16,11 +16,7 @@ export const draw = (p: p5): void => {
 
   p.background(0);
 
-  providers.forEach((p, i, _) => {
-    p.update(elapsedTime);
-  });
-
   consumers.forEach((c, i, _) => {
-    c.draw();
+    c.draw(elapsedTime);
   });
 };

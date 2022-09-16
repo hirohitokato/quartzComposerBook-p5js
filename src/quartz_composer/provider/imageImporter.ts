@@ -7,9 +7,11 @@ export class ImageImporter implements Provider {
 
   imagePath: string;
 
+  private _image: p5.Image;
+
   constructor(private p: p5, imagePath: string) {
     this.imagePath = imagePath;
-    this.image = new BindableOutput(p.loadImage(imagePath));
+    this._image = p.loadImage(imagePath);
+    this.image = new BindableOutput(this._image);
   }
-  update(elapsed: number): void {}
 }
