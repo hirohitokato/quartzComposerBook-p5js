@@ -27,6 +27,14 @@ export const InterpolationType = {
 } as const;
 export type InterpolationType = typeof InterpolationType[keyof typeof InterpolationType];
 
+/**
+ * This patch interpolates between two numerical values over time.
+ *
+ * The curve used for the interpolation can be chosen among presets
+ * (linear, quadratic, exponential...).
+ *
+ * The duration of the interpolation and its looping mode can also be specified.
+ */
 export class Interpolation implements Provider {
   /** Start value */
   startValue: BindableInput<number> = new BindableInput(0);

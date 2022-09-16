@@ -2,7 +2,7 @@ import p5 from "p5";
 import { BindableInput, BindableOutput } from "../core/bindable";
 import { Provider } from "../core/provider";
 
-export const LFOType = {
+export const WaveType = {
   Sin: "sin",
   Cos: "cos",
   Triangle: "triangle",
@@ -12,11 +12,20 @@ export const LFOType = {
   PWM: "pwm",
   Random: "random",
 } as const;
-export type LFOType = typeof LFOType[keyof typeof LFOType];
+export type WaveType = typeof WaveType[keyof typeof WaveType];
 
-export class LFO implements Provider {
+/**
+ * This patch generates a low-frequency oscillation.
+ *
+ * All the parameters of the wave used for the oscillation can be customized:
+ *  type, period, phase, offset and amplitude.
+ *
+ * The minimum and maximum values reached by the wave are defined by
+ * (offset - amplitude) and (offset + amplitude).
+ */
+export class WaveGenerator implements Provider {
   /** 種類 */
-  type: BindableInput<LFOType>;
+  type: BindableInput<WaveType>;
   /** 周期 */
   period: BindableInput<number>;
   /** 位相 */
@@ -34,15 +43,15 @@ export class LFO implements Provider {
   private methods: { [type: string]: (dt: number) => number } = {};
 
   constructor(private p: p5) {
-    this.type = new BindableInput(LFOType.Sin);
+    this.type = new BindableInput(WaveType.Sin);
     this.period = new BindableInput(1);
     this.phase = new BindableInput(0);
     this.amplitude = new BindableInput(1);
     this.offset = new BindableInput(0);
     this.pwmRatio = new BindableInput(0.25);
 
-    this.methods[LFOType.Sin] = this.sinLfo.bind(this);
-    this.methods[LFOType.Cos] = this.cosLfo.bind(this);
+    this.methods[WaveType.Sin] = this.sin.bind(this);
+    this.methods[WaveType.Cos] = this.cos.bind(this);
 
     this.result = new BindableOutput(0);
     this.result.onRequestedValue = (t) => {
@@ -50,7 +59,7 @@ export class LFO implements Provider {
     };
   }
 
-  private sinLfo(elapsedTime: number): number {
+  private sin(elapsedTime: number): number {
     const period = this.period.getValue(elapsedTime);
     const phase = this.phase.getValue(elapsedTime);
     const amplitude = this.amplitude.getValue(elapsedTime);
@@ -60,7 +69,7 @@ export class LFO implements Provider {
     return y * amplitude + offset;
   }
 
-  private cosLfo(elapsedTime: number): number {
+  private cos(elapsedTime: number): number {
     const period = this.period.getValue(elapsedTime);
     const phase = this.phase.getValue(elapsedTime);
     const amplitude = this.amplitude.getValue(elapsedTime);

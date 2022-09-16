@@ -2,6 +2,16 @@ import p5 from "p5";
 import { BindableInput } from "../core/bindable";
 import { Consumer } from "../core/consumer";
 
+/**
+ * This patch renders a single quad with optionaly antialiased borders.
+ *
+ * The image on the quad is multiplied by the color set on the "Color" input
+ * and can be combined with a mask using the optional "Mask Image" input
+ * (the mask will be resized to match the image's size).
+ *
+ * Note that the Billboard patch is a simplified version of Sprite with fewer
+ * parameters and which is especially suited for 2D drawing.
+ */
 export class Sprite implements Consumer {
   layer: number = 1;
 

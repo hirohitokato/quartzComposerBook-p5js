@@ -10,6 +10,14 @@ export const GradientDirection = {
 } as const;
 export type GradientDirection = typeof GradientDirection[keyof typeof GradientDirection];
 
+/**
+ * Renders an horizontal or vertical gradient shading that covers the entire
+ * rendering destination and varies between three colors - starting, middle,
+ * and ending. This patch also clears the depth buffer.
+ *
+ * Assuming the "Blending" input is set to "None", you can use Gradient
+ * instead of Clear to clear the rendering destination.
+ */
 export class Gradient implements Consumer {
   layer: number = 1;
 

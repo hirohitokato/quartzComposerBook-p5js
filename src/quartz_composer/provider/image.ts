@@ -2,7 +2,13 @@ import p5 from "p5";
 import { BindableOutput } from "../core/bindable";
 import { Provider } from "../core/provider";
 
-export class ImageImporter implements Provider {
+/**
+ * This patch imports an image from a file. Most common image file formats
+ * are supported: JPEG, TIFF, PNG, GIF, BMP, TGA, OpenEXR, JPEG 2000, PDF...
+ *
+ * Note that the image data is saved within the composition.
+ */
+export class Image implements Provider {
   image: BindableOutput<p5.Image>;
 
   imagePath: string;

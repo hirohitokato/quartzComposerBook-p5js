@@ -2,6 +2,9 @@ import p5 from "p5";
 import { BindableInput, BindableOutput } from "../core/bindable";
 import { Operator } from "../core/operator";
 
+/**
+ * This patch rounds a numerical value to the nearest, largest or smallest integer.
+ */
 export class Round implements Operator {
   value: BindableInput<number> = new BindableInput(0);
 

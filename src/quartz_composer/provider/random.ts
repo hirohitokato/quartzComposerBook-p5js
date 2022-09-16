@@ -2,6 +2,11 @@ import p5 from "p5";
 import { BindableInput, BindableOutput } from "../core/bindable";
 import { Provider } from "../core/provider";
 
+/**
+ * This patch generates random values in a given range.
+ *
+ * The variability of the generated random values can be set in the patch's settings.
+ */
 export class Random implements Provider {
   min: BindableInput<number> = new BindableInput(0);
   max: BindableInput<number> = new BindableInput(1);
