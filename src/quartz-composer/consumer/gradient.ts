@@ -36,8 +36,8 @@ export class Gradient implements Consumer {
   }
 
   draw(elapsed: number) {
-    let x = 0;
-    let y = 0;
+    let x = -this.p.width / 2;
+    let y = -this.p.height / 2;
     let w = this.p.width;
     let h = this.p.height;
     let { c1, c2, c3 } = this.getColors(elapsed);
@@ -51,14 +51,14 @@ export class Gradient implements Consumer {
     ) {
       // Top to bottom gradient
       this.drawVGradient(x, w, y, y + h * c2pos, c1, c2);
-      this.drawVGradient(x, w, h * c2pos, h, c2, c3);
+      this.drawVGradient(x, w, y + h * c2pos, h / 2, c2, c3);
     } else if (
       this.direction == GradientDirection.Horizontal_LeftToRight ||
       this.direction == GradientDirection.Horizontal_RightToLeft
     ) {
       // Left to right gradient
-      this.drawHGradient(y, h, x, x * c2pos, c1, c2);
-      this.drawHGradient(y, h, x * c2pos, x, c2, c3);
+      this.drawHGradient(y, h, x, x + w * c2pos, c1, c2);
+      this.drawHGradient(y, h, x + w * c2pos, w / 2, c2, c3);
     }
   }
 
@@ -90,12 +90,16 @@ export class Gradient implements Consumer {
     fromColor: p5.Color,
     toColor: p5.Color
   ) {
-    for (let i = from; i <= to; i++) {
-      let inter = this.p.map(i, from, to, 0, 1);
-      let c = this.p.lerpColor(fromColor, toColor, inter);
-      this.p.stroke(c);
-      this.p.line(x, i, x + width, i);
-    }
+    this.p.beginShape();
+    this.p.fill(fromColor);
+    this.p.vertex(x + width, from);
+    this.p.fill(toColor);
+    this.p.vertex(x + width, to);
+    this.p.fill(toColor);
+    this.p.vertex(x, to);
+    this.p.fill(fromColor);
+    this.p.vertex(x, from);
+    this.p.endShape();
   }
 
   private drawHGradient(
@@ -106,11 +110,15 @@ export class Gradient implements Consumer {
     fromColor: p5.Color,
     toColor: p5.Color
   ) {
-    for (let i = from; i <= to; i++) {
-      let inter = this.p.map(i, from, to, 0, 1);
-      let c = this.p.lerpColor(fromColor, toColor, inter);
-      this.p.stroke(c);
-      this.p.line(i, y, i, y + height);
-    }
+    this.p.beginShape();
+    this.p.fill(toColor);
+    this.p.vertex(to, y);
+    this.p.fill(toColor);
+    this.p.vertex(to, y + height);
+    this.p.fill(fromColor);
+    this.p.vertex(from, y + height);
+    this.p.fill(fromColor);
+    this.p.vertex(from, y);
+    this.p.endShape();
   }
 }

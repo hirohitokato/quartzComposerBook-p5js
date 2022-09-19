@@ -1,4 +1,5 @@
 import p5 from "p5";
+import { shader } from "../../setup";
 import { BindableInput } from "../core/bindable";
 import { Consumer } from "../core/consumer";
 
@@ -15,12 +16,12 @@ import { Consumer } from "../core/consumer";
 export class Sprite implements Consumer {
   layer: number = 1;
 
-  x_position: BindableInput<number> = new BindableInput(0);
-  y_position: BindableInput<number> = new BindableInput(0);
+  xPosition: BindableInput<number> = new BindableInput(0);
+  yPosition: BindableInput<number> = new BindableInput(0);
 
-  x_rotation: BindableInput<number> = new BindableInput(0);
-  y_rotation: BindableInput<number> = new BindableInput(0);
-  z_rotation: BindableInput<number> = new BindableInput(0);
+  xRotation: BindableInput<number> = new BindableInput(0);
+  yRotation: BindableInput<number> = new BindableInput(0);
+  zRotation: BindableInput<number> = new BindableInput(0);
 
   widthScale: BindableInput<number> = new BindableInput(1);
   heightScale: BindableInput<number> = new BindableInput(1);
@@ -32,18 +33,30 @@ export class Sprite implements Consumer {
   updateValue() {}
 
   draw(elapsed: number) {
-    const x = (this.p.width * (this.x_position.getValue(elapsed) + 1)) / 2;
-    const y = (this.p.height * (this.y_position.getValue(elapsed) + 1)) / 2;
+    const x = (this.p.width * this.xPosition.getValue(elapsed)) / 2;
+    const y = (this.p.height * this.yPosition.getValue(elapsed)) / 2;
 
     const image = this.image.getValue(elapsed);
     const w = image.width * this.widthScale.getValue(elapsed);
     const h = image.height * this.heightScale.getValue(elapsed);
 
     this.p.push();
-    this.p.translate(x, y);
-    this.p.rotate(this.p.radians(this.z_rotation.getValue(elapsed)));
+    this.p.translate(x, y, this.layer);
+    this.p.rotate(this.p.radians(this.zRotation.getValue(elapsed)));
     this.p.imageMode(this.p.CENTER);
-    this.p.image(image, 0, 0, w, h);
+    this.p.shader(shader);
+    this.p.texture(image);
+    this.p.plane(w, h);
     this.p.pop();
   }
 }
+// buf.clear();
+// for (let [x, y, z] of coins) {
+//   buf.push();
+//   buf.translate(x, y, z);
+//   buf.rotateY(millis() / 1000 * PI);
+//   buf.texture(img);
+//   buf.shader(shdr);
+//   buf.plane(100);
+//   buf.pop();
+// }
