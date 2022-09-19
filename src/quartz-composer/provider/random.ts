@@ -8,7 +8,7 @@ import { Provider } from "../core/provider";
  * The variability of the generated random values can be set in the patch's settings.
  */
 export class Random implements Provider {
-  min: BindableInput<number> = new BindableInput(0);
+  min: BindableInput<number> = new BindableInput(-1);
   max: BindableInput<number> = new BindableInput(1);
 
   patchTime: BindableInput<number> = new BindableInput<number>(-1);
@@ -18,7 +18,7 @@ export class Random implements Provider {
   private _previousValue: number | undefined = undefined;
 
   constructor(private p: p5) {
-    this.value.onRequestedValue = this.onRequestedValue;
+    this.value.onRequestedValue = this.onRequestedValue.bind(this);
   }
 
   private onRequestedValue(elapsed: number): number {
