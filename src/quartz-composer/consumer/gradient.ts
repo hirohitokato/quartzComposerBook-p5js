@@ -19,7 +19,7 @@ export type GradientDirection = typeof GradientDirection[keyof typeof GradientDi
  * instead of Clear to clear the rendering destination.
  */
 export class Gradient implements Consumer {
-  layer: number = 1;
+  layer: number = 0;
 
   direction: GradientDirection;
   color1: BindableInput<p5.Color>;

@@ -8,7 +8,7 @@ import { Consumer } from "../core/consumer";
  * followed by scale around an origin point.
  */
 export class Transformation3D implements Consumer {
-  layer: number = 10;
+  layer: number = 1;
 
   xOrigin: BindableInput<number> = new BindableInput(0);
   yOrigin: BindableInput<number> = new BindableInput(0);
@@ -31,21 +31,22 @@ export class Transformation3D implements Consumer {
   constructor(private p: p5) {}
 
   addConsumer(consumer: Consumer) {
+    consumer.layer += this.layer;
     this._subConsumers.push(consumer);
   }
 
   draw(atTime: number): void {
-    const xOrigin = (this.p.width * (this.xOrigin.getValue(atTime) + 1)) / 2;
-    const yOrigin = (this.p.height * (this.yOrigin.getValue(atTime) + 1)) / 2;
-    const zOrigin = this.zOrigin.getValue(atTime);
+    const xOrigin = this.p.width * this.xOrigin.getValue(atTime);
+    const yOrigin = this.p.height * this.yOrigin.getValue(atTime);
+    const zOrigin = this.layer + this.zOrigin.getValue(atTime);
 
     const xRotation = this.p.radians(this.xRotation.getValue(atTime));
     const yRotation = this.p.radians(this.yRotation.getValue(atTime));
     const zRotation = this.p.radians(this.zRotation.getValue(atTime));
 
-    const xTranslation = (this.p.width * (this.xTranslation.getValue(atTime) + 1)) / 2;
-    const yTranslation = (this.p.height * (this.yTranslation.getValue(atTime) + 1)) / 2;
-    const zTranslation = this.zTranslation.getValue(atTime);
+    const xTranslation = this.p.width * this.xTranslation.getValue(atTime);
+    const yTranslation = this.p.height * this.yTranslation.getValue(atTime);
+    const zTranslation = this.layer + this.zTranslation.getValue(atTime);
 
     const xScale = this.xScale.getValue(atTime);
     const yScale = this.yScale.getValue(atTime);
@@ -53,13 +54,13 @@ export class Transformation3D implements Consumer {
 
     this.p.push();
 
-    this.p.translate(xOrigin, yOrigin, zOrigin);
+    this.p.translate(-xOrigin, -yOrigin, -zOrigin);
     this.p.rotateZ(zRotation);
     this.p.rotateX(xRotation);
     this.p.rotateY(yRotation);
-    this.p.translate(-xOrigin + xTranslation, -yOrigin + yTranslation, -zOrigin + zTranslation);
 
     this.p.scale(xScale, yScale, zScale);
+    this.p.translate(xOrigin + xTranslation, yOrigin + yTranslation, zOrigin + zTranslation);
 
     this._subConsumers.forEach((c) => {
       c.draw(atTime);

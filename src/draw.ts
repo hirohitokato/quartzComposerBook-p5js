@@ -1,5 +1,5 @@
 import p5 from "p5";
-import { consumers, gradient_background, providers, volvox } from "./setup";
+import { consumers } from "./setup";
 
 let startTime: number = -1;
 

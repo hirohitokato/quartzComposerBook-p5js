@@ -8,9 +8,6 @@ import { Image } from "./quartz-composer/provider/image";
 import { Interpolation } from "./quartz-composer/provider/interpolation";
 import { WaveGenerator, WaveType } from "./quartz-composer/provider/lfo";
 
-export let gradient_background: Gradient;
-export let volvox: Sprite;
-
 export let images: { [name: string]: Image } = {};
 export let providers: Provider[] = [];
 export let consumers: Consumer[] = [];
@@ -26,7 +23,7 @@ export let shader: p5.Shader;
 export const setup = (p: p5): void => {
   console.log("setup");
 
-  let canvas = p.createCanvas(800, 600, p.WEBGL) as any;
+  p.createCanvas(800, 600, p.WEBGL) as any;
 
   p.noStroke();
   p.setAttributes("preserveDrawingBuffer", true);
@@ -34,21 +31,23 @@ export const setup = (p: p5): void => {
   p.setAttributes("alpha", true);
   shader = p.createShader(vert, frag);
 
-  gradient_background = new Gradient(p);
+  let gradient_background = new Gradient(p);
+  gradient_background.layer = 0;
   gradient_background.color1.setDefaultValue(p.color(134, 148, 150));
   gradient_background.color2.setDefaultValue(p.color(32, 56, 56));
   gradient_background.color3.setDefaultValue(p.color(0));
   gradient_background.direction = GradientDirection.Vertical_UpsideDown;
 
-  volvox = new Sprite(p);
+  let volvox = new Sprite(p);
+  volvox.layer = 0;
   volvox.image.bind(images["volvox"]!.image);
   volvox.xPosition.setDefaultValue(100);
 
-  // let group = new Transformation3D(p);
-  // group.xScale.setDefaultValue(2);
-  // group.addConsumer(volvox);
+  let group = new Transformation3D(p);
+  group.layer = 1;
+  group.addConsumer(volvox);
 
-  consumers.push(volvox, gradient_background);
+  consumers.push(gradient_background, group);
 
   let lfo_x = new WaveGenerator(p);
   lfo_x.type.setDefaultValue(WaveType.Sin);
