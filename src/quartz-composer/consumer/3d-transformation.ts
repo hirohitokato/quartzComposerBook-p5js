@@ -36,16 +36,16 @@ export class Transformation3D implements Consumer {
   }
 
   draw(atTime: number): void {
-    const xOrigin = this.p.width * this.xOrigin.getValue(atTime);
-    const yOrigin = this.p.height * this.yOrigin.getValue(atTime);
+    const xOrigin = (this.p.width / 2) * this.xOrigin.getValue(atTime);
+    const yOrigin = (this.p.height / 2) * this.yOrigin.getValue(atTime);
     const zOrigin = this.layer + this.zOrigin.getValue(atTime);
 
     const xRotation = this.p.radians(this.xRotation.getValue(atTime));
     const yRotation = this.p.radians(this.yRotation.getValue(atTime));
     const zRotation = this.p.radians(this.zRotation.getValue(atTime));
 
-    const xTranslation = this.p.width * this.xTranslation.getValue(atTime);
-    const yTranslation = this.p.height * this.yTranslation.getValue(atTime);
+    const xTranslation = (this.p.width / 2) * this.xTranslation.getValue(atTime);
+    const yTranslation = -(this.p.height / 2) * this.yTranslation.getValue(atTime);
     const zTranslation = this.layer + this.zTranslation.getValue(atTime);
 
     const xScale = this.xScale.getValue(atTime);
@@ -54,17 +54,20 @@ export class Transformation3D implements Consumer {
 
     this.p.push();
 
-    this.p.translate(-xOrigin, -yOrigin, -zOrigin);
+    this.p.push();
+    this.p.translate(xOrigin, yOrigin, zOrigin);
     this.p.rotateZ(zRotation);
     this.p.rotateX(xRotation);
     this.p.rotateY(yRotation);
+    this.p.pop();
 
     this.p.scale(xScale, yScale, zScale);
-    this.p.translate(xOrigin + xTranslation, yOrigin + yTranslation, zOrigin + zTranslation);
+    this.p.translate(xTranslation, yTranslation, zTranslation);
 
     this._subConsumers.forEach((c) => {
       c.draw(atTime);
     });
+
     this.p.pop();
   }
 }

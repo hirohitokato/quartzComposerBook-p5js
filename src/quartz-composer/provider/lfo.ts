@@ -65,7 +65,7 @@ export class WaveGenerator implements Provider {
     const amplitude = this.amplitude.getValue(elapsedTime);
     const offset = this.offset.getValue(elapsedTime);
 
-    let y = Math.sin(elapsedTime * (Math.PI / period) + phase);
+    let y = Math.sin(elapsedTime * ((2 * Math.PI) / period) + phase);
     return y * amplitude + offset;
   }
 
@@ -75,7 +75,7 @@ export class WaveGenerator implements Provider {
     const amplitude = this.amplitude.getValue(elapsedTime);
     const offset = this.offset.getValue(elapsedTime);
 
-    let y = Math.cos(elapsedTime * (Math.PI / period) + phase);
+    let y = Math.cos(elapsedTime * ((2 * Math.PI) / period) + phase);
     return y * amplitude + offset;
   }
 }

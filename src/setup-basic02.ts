@@ -35,7 +35,7 @@ export class SetupBasic02 {
 
     // body
     let body = new Sprite(p);
-    body.layer = 2;
+    body.layer = 3;
     body.image.bind(images["Body"]!.image);
     let lfo_body = new WaveGenerator(p);
     lfo_body.type.setDefaultValue(WaveType.Sin);
@@ -63,7 +63,7 @@ export class SetupBasic02 {
     jellyfish.addConsumer(foot);
     jellyfish.addConsumer(body);
     jellyfish.layer = 2;
-    jellyfish.zTranslation.setDefaultValue(0.3);
+    jellyfish.zTranslation.setDefaultValue(3);
 
     let patchtime = new PatchTime(p);
     let divider = new MathOperator(p);
@@ -78,8 +78,8 @@ export class SetupBasic02 {
 
     let interp = new Interpolation(p);
     jellyfish.yTranslation.bind(interp.result);
-    interp.startValue.setDefaultValue(-1.5);
-    interp.endValue.setDefaultValue(1.5);
+    interp.startValue.setDefaultValue(-1.75);
+    interp.endValue.setDefaultValue(1.75);
     interp.duration.setDefaultValue(10);
     interp.repeatMode.setDefaultValue(RepeatMode.Loop);
     interp.interpolationType.setDefaultValue(InterpolationType.Linear);

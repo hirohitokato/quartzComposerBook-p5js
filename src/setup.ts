@@ -2,10 +2,12 @@ import p5 from "p5";
 import { Consumer } from "./quartz-composer/core/consumer";
 import { SetupBasic01 } from "./setup-basic01";
 import { SetupBasic02 } from "./setup-basic02";
+import { SetupTmp } from "./setup-tmp";
 
 export let consumers: Consumer[] = [];
 
 let klass = SetupBasic02;
+// let klass = SetupTmp;
 
 export const preload = (p: p5): void => {
   console.log("preload");

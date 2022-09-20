@@ -33,8 +33,8 @@ export class Sprite implements Consumer {
   updateValue() {}
 
   draw(elapsed: number) {
-    const x = (this.p.width * this.xPosition.getValue(elapsed)) / 2;
-    const y = (this.p.height * this.yPosition.getValue(elapsed)) / 2;
+    const x = (this.p.width / 2) * this.xPosition.getValue(elapsed);
+    const y = -(this.p.height / 2) * this.yPosition.getValue(elapsed);
 
     const image = this.image.getValue(elapsed);
     const w = image.width * this.widthScale.getValue(elapsed);
@@ -50,13 +50,3 @@ export class Sprite implements Consumer {
     this.p.pop();
   }
 }
-// buf.clear();
-// for (let [x, y, z] of coins) {
-//   buf.push();
-//   buf.translate(x, y, z);
-//   buf.rotateY(millis() / 1000 * PI);
-//   buf.texture(img);
-//   buf.shader(shdr);
-//   buf.plane(100);
-//   buf.pop();
-// }
