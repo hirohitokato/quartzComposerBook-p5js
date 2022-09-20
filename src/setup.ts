@@ -6,6 +6,7 @@ import { SetupTmp } from "./setup-tmp";
 
 export let consumers: Consumer[] = [];
 
+// let klass = SetupBasic01;
 let klass = SetupBasic02;
 // let klass = SetupTmp;
 

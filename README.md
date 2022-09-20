@@ -2,7 +2,7 @@
 
 This is p5.js implementations of sample codes explained in [Quarts Composer Book](http://www.bnn.co.jp/books/3645/).
 
-![](https://raw.githubusercontent.com/hirohitokato/myAssets/main/quartzComposerBook-p5js/volvox.gif)
+![](https://raw.githubusercontent.com/hirohitokato/myAssets/main/quartzComposerBook-p5js/volvox.gif) ![](https://raw.githubusercontent.com/hirohitokato/myAssets/main/quartzComposerBook-p5js/jellyfish.gif)
 
 ## Setup
 
@@ -20,6 +20,18 @@ If you use vscode, you can do it by selecting `Run Build Task ...`(`Ctrl/Cmd-Shi
 
 Then, open `dist/index.html` via any browser. ([Live Server vscode plugin](https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer) may help you)
 
+### How to change the sample
+
+In `src/setup.ts`, you can find the following code:
+
+```typescript
+// let klass = SetupBasic01;
+let klass = SetupBasic02;
+// let klass = ...;
+```
+
+change it as you like. Of course, you can create your own drawings with a similar way.
+
 ## Notes
 
 * All assets are downloaded from [here](http://download.bnn.co.jp/download/qcb/).
@@ -27,11 +39,11 @@ Then, open `dist/index.html` via any browser. ([Live Server vscode plugin](https
 
 ## ToDo
 
-* [ ] Patch Time
-* [ ] Math
-* [ ] Round
-* [ ] Random
-* [ ] **3D Transformation**
+* [X] Patch Time
+* [X] Math
+* [X] Round
+* [X] Random
+* [X] **3D Transformation**
 * [ ] **Iterator**
 * [ ] Iterator Variables
 * [ ] HSL Color
