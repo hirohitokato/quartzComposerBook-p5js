@@ -66,12 +66,12 @@ export class SetupBasic02 {
     jellyfish.zTranslation.setDefaultValue(3);
 
     let patchtime = new PatchTime(p);
-    let divider = new MathOperator(p);
+    let divider = new MathOperator(p, 1);
     let roundtime = new Round(p);
     let randomtime = new Random(p);
-    divider.value.bind(patchtime.time);
-    divider.operation = MathOperation.Divide;
-    divider.operand.setDefaultValue(10);
+    divider.initialValue.bind(patchtime.time);
+    divider.operations[0]!.setDefaultValue(MathOperation.Divide);
+    divider.operands[0]!.setDefaultValue(10);
     roundtime.value.bind(divider.result);
     randomtime.patchTime.bind(roundtime.floorValue);
     jellyfish.xTranslation.bind(randomtime.value);

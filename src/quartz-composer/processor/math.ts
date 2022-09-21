@@ -1,13 +1,14 @@
 import p5 from "p5";
 import { BindableInput, BindableOutput } from "../core/bindable";
 import { Operator } from "../core/operator";
+import { zip } from "../core/utils";
 
 export const MathOperation = {
   Add: "add",
   Subtract: "subtract",
   Multiply: "multiply",
   Divide: "divide",
-  Percentile: "percentile",
+  Modulo: "percentile",
   Pow: "pow",
   Min: "min",
   Max: "max",
@@ -22,34 +23,83 @@ export type MathOperation = typeof MathOperation[keyof typeof MathOperation];
  * operation #2 with operand #2 and so on...
  */
 export class MathOperator implements Operator {
-  operation: MathOperation = MathOperation.Add;
-  value: BindableInput<number> = new BindableInput(0);
-  operand: BindableInput<number> = new BindableInput(0);
+  /** The number of operations to apply to the initialValue. */
+  get num_operations(): number {
+    return this._num_operations;
+  }
 
+  /** The number of operations to apply to the initialValue. */
+  set num_operations(num: number) {
+    this._num_operations = num;
+    this.operations = MathOperator._move(this.operations, MathOperation.Add, num);
+    this.operands = MathOperator._move(this.operands, 0, num);
+  }
+  private _num_operations: number = 1;
+
+  // input ports
+  initialValue: BindableInput<number> = new BindableInput(0);
+  operations: BindableInput<MathOperation>[] = [new BindableInput(MathOperation.Add)];
+  operands: BindableInput<number>[] = [new BindableInput(0)];
+
+  // output ports
   result: BindableOutput<number> = new BindableOutput(0);
 
-  constructor(p: p5) {
-    this.result.onRequestedValue = this.operate.bind(this);
+  constructor(private p: p5, num_operations: number = 1) {
+    this.result.onRequestedValue = this._operate.bind(this);
+    this.num_operations = num_operations;
   }
 
-  private operate(t: number): number {
-    switch (this.operation) {
+  private _operate(t: number): number {
+    const pairs: Element[] = zip(this.operations, this.operands).map(
+      (x) => new Element(x[0].getValue(t), x[1].getValue(t))
+    );
+    let result = pairs.reduce(
+      (prev, cur) =>
+        new Element(cur.operation, MathOperator._calc(cur.operation, prev.operand, cur.operand)),
+      new Element(MathOperation.Add /*dummy*/, this.initialValue.getValue(t))
+    );
+    return result.operand;
+  }
+
+  private static _calc(operation: MathOperation, op1: number, op2: number): number {
+    switch (operation) {
       case MathOperation.Add:
-        return this.value.getValue(t) + this.operand.getValue(t);
+        return op1 + op2;
       case MathOperation.Subtract:
-        return this.value.getValue(t) - this.operand.getValue(t);
+        return op1 - op2;
       case MathOperation.Multiply:
-        return this.value.getValue(t) * this.operand.getValue(t);
+        return op1 * op2;
       case MathOperation.Divide:
-        return this.value.getValue(t) / this.operand.getValue(t);
-      case MathOperation.Percentile:
-        return this.value.getValue(t) * this.operand.getValue(t) * 100;
+        return op1 / op2;
+      case MathOperation.Modulo:
+        return op1 % op2;
       case MathOperation.Pow:
-        return Math.pow(this.value.getValue(t), this.operand.getValue(t));
+        return Math.pow(op1, op2);
       case MathOperation.Min:
-        return Math.min(this.value.getValue(t), this.operand.getValue(t));
+        return Math.min(op1, op2);
       case MathOperation.Max:
-        return Math.max(this.value.getValue(t), this.operand.getValue(t));
+        return Math.max(op1, op2);
     }
   }
+
+  private static _move<T>(
+    array: BindableInput<T>[],
+    defaultValue: T,
+    limit: number
+  ): BindableInput<T>[] {
+    let ops: BindableInput<T>[] = [];
+    array.forEach((op, i) => {
+      if (i < limit) {
+        ops.push(op);
+      }
+    });
+    while (ops.length < limit) {
+      ops.push(new BindableInput<T>(defaultValue));
+    }
+    return ops;
+  }
+}
+
+class Element {
+  constructor(public operation: MathOperation, public operand: number) {}
 }
