@@ -2,7 +2,7 @@
 
 This is p5.js implementations of sample codes explained in [Quarts Composer Book](http://www.bnn.co.jp/books/3645/).
 
-![](https://raw.githubusercontent.com/hirohitokato/myAssets/main/quartzComposerBook-p5js/volvox.gif) ![](https://raw.githubusercontent.com/hirohitokato/myAssets/main/quartzComposerBook-p5js/jellyfish.gif)
+![](https://raw.githubusercontent.com/hirohitokato/myAssets/main/quartzComposerBook-p5js/volvox.gif) ![](https://raw.githubusercontent.com/hirohitokato/myAssets/main/quartzComposerBook-p5js/jellyfish.gif) ![](https://raw.githubusercontent.com/hirohitokato/myAssets/main/quartzComposerBook-p5js/trilobite.gif)
 
 ## Setup
 
@@ -44,8 +44,8 @@ change it as you like. Of course, you can create your own drawings with a simila
 * [X] Round
 * [X] Random
 * [X] **3D Transformation**
-* [ ] **Iterator**
-* [ ] Iterator Variables
+* [X] **Iterator**
+* [X] Iterator Variables
 * [ ] HSL Color
 * [ ] Image Texturing Properties
 * [ ] Cube
