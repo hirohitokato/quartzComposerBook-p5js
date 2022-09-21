@@ -10,6 +10,8 @@ import { Consumer } from "../core/consumer";
 export class Transformation3D implements Consumer {
   layer: number = 1;
 
+  patchTime: BindableInput<number> = new BindableInput(-1);
+
   xOrigin: BindableInput<number> = new BindableInput(0);
   yOrigin: BindableInput<number> = new BindableInput(0);
   zOrigin: BindableInput<number> = new BindableInput(0);
@@ -36,21 +38,24 @@ export class Transformation3D implements Consumer {
   }
 
   draw(atTime: number): void {
-    const xOrigin = (this.p.width / 2) * this.xOrigin.getValue(atTime);
-    const yOrigin = (this.p.height / 2) * this.yOrigin.getValue(atTime);
-    const zOrigin = this.layer + this.zOrigin.getValue(atTime);
+    const patchTime = this.patchTime.getValue(atTime);
+    const t = patchTime == -1 ? atTime : patchTime;
 
-    const xRotation = this.p.radians(this.xRotation.getValue(atTime));
-    const yRotation = this.p.radians(this.yRotation.getValue(atTime));
-    const zRotation = this.p.radians(this.zRotation.getValue(atTime));
+    const xOrigin = (this.p.width / 2) * this.xOrigin.getValue(t);
+    const yOrigin = (this.p.height / 2) * this.yOrigin.getValue(t);
+    const zOrigin = this.layer + this.zOrigin.getValue(t);
 
-    const xTranslation = (this.p.width / 2) * this.xTranslation.getValue(atTime);
-    const yTranslation = -(this.p.height / 2) * this.yTranslation.getValue(atTime);
-    const zTranslation = this.layer + this.zTranslation.getValue(atTime);
+    const xRotation = this.p.radians(this.xRotation.getValue(t));
+    const yRotation = this.p.radians(this.yRotation.getValue(t));
+    const zRotation = this.p.radians(this.zRotation.getValue(t));
 
-    const xScale = this.xScale.getValue(atTime);
-    const yScale = this.yScale.getValue(atTime);
-    const zScale = this.zScale.getValue(atTime);
+    const xTranslation = (this.p.width / 2) * this.xTranslation.getValue(t);
+    const yTranslation = -(this.p.height / 2) * this.yTranslation.getValue(t);
+    const zTranslation = this.layer + this.zTranslation.getValue(t);
+
+    const xScale = this.xScale.getValue(t);
+    const yScale = this.yScale.getValue(t);
+    const zScale = this.zScale.getValue(t);
 
     this.p.push();
 
@@ -64,8 +69,8 @@ export class Transformation3D implements Consumer {
     this.p.scale(xScale, yScale, zScale);
     this.p.translate(xTranslation, yTranslation, zTranslation);
 
-    this._subConsumers.forEach((c) => {
-      c.draw(atTime);
+    this._subConsumers.forEach((consumer) => {
+      consumer.draw(t);
     });
 
     this.p.pop();

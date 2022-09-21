@@ -2,12 +2,14 @@ import p5 from "p5";
 import { Consumer } from "./quartz-composer/core/consumer";
 import { SetupBasic01 } from "./setup-basic01";
 import { SetupBasic02 } from "./setup-basic02";
+import { SetupBasic03 } from "./setup-basic03";
 import { SetupTmp } from "./setup-tmp";
 
 export let consumers: Consumer[] = [];
 
 // let klass = SetupBasic01;
-let klass = SetupBasic02;
+// let klass = SetupBasic02;
+let klass = SetupBasic03;
 // let klass = SetupTmp;
 
 export const preload = (p: p5): void => {
@@ -25,7 +27,7 @@ export const setup = (p: p5): void => {
   p.noStroke();
   p.setAttributes("preserveDrawingBuffer", true);
   p.setAttributes("premultipliedAlpha", false);
-  p.setAttributes("alpha", true);
+  p.setAttributes("alpha", false);
   shader = p.createShader(vert, frag);
 
   klass.setup(p, consumers);

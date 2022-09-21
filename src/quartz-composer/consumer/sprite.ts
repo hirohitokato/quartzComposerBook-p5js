@@ -41,12 +41,14 @@ export class Sprite implements Consumer {
     const h = image.height * this.heightScale.getValue(elapsed);
 
     this.p.push();
+    // this.p.blendMode(this.p.BURN);
     this.p.translate(x, y, this.layer);
     this.p.rotate(this.p.radians(this.zRotation.getValue(elapsed)));
     this.p.imageMode(this.p.CENTER);
     this.p.shader(shader);
     this.p.texture(image);
     this.p.plane(w, h);
+    // this.p.image(image, 0, 0, w, h);
     this.p.pop();
   }
 }

@@ -36,6 +36,8 @@ export type InterpolationType = typeof InterpolationType[keyof typeof Interpolat
  * The duration of the interpolation and its looping mode can also be specified.
  */
 export class Interpolation implements Provider {
+  patchTime: BindableInput<number> = new BindableInput(-1);
+
   /** Start value */
   startValue: BindableInput<number> = new BindableInput(0);
   /** End value */
@@ -54,23 +56,26 @@ export class Interpolation implements Provider {
   }
 
   onRequestedValue(elapsed: number): number {
-    let duration = this.duration.getValue(elapsed);
+    const patchTime = this.patchTime.getValue(elapsed);
+    const t = patchTime == -1 ? elapsed : patchTime;
+
+    let duration = this.duration.getValue(t);
     const originalDuration = duration;
-    const repeatMode = this.repeatMode.getValue(elapsed);
+    const repeatMode = this.repeatMode.getValue(t);
     if (repeatMode == RepeatMode.MirroredLoop || repeatMode == RepeatMode.MirroredLoopOnce) {
       // consider reversed phase
       duration *= 2;
     }
 
-    let progress = elapsed % duration;
+    let progress = t % duration;
     if (progress > originalDuration) {
       progress = originalDuration - (progress - originalDuration);
     }
     // 0...1 value
     progress /= originalDuration;
 
-    const startValue = this.startValue.getValue(elapsed);
-    const endValue = this.endValue.getValue(elapsed);
+    const startValue = this.startValue.getValue(t);
+    const endValue = this.endValue.getValue(t);
 
     return (endValue - startValue) * progress + startValue;
   }

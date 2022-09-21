@@ -45,4 +45,8 @@ export class BindableOutput<T> {
     }
     return this.onRequestedValue(atTime);
   }
+
+  updateInitialValue(value: T) {
+    this._initialValue = value;
+  }
 }
