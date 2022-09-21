@@ -49,19 +49,26 @@ export class Gradient implements Consumer {
       this.direction == GradientDirection.Vertical_Upside ||
       this.direction == GradientDirection.Vertical_UpsideDown
     ) {
-      // Top to bottom gradient
+      // Vertical gradient
       this.drawVGradient(x, w, y, y + h * c2pos, c1, c2);
       this.drawVGradient(x, w, y + h * c2pos, h / 2, c2, c3);
     } else if (
       this.direction == GradientDirection.Horizontal_LeftToRight ||
       this.direction == GradientDirection.Horizontal_RightToLeft
     ) {
-      // Left to right gradient
+      // Horizontal gradient
       this.drawHGradient(y, h, x, x + w * c2pos, c1, c2);
       this.drawHGradient(y, h, x + w * c2pos, w / 2, c2, c3);
     }
   }
 
+  /**
+   * Returns the three color combination for gradient.
+   *
+   * The order of the combination is desided by the direction value.
+   * @param elapsed elapsed time for getting color value from input port
+   * @returns color combination depends on direction value
+   */
   private getColors(elapsed: number): { c1: p5.Color; c2: p5.Color; c3: p5.Color } {
     let c1: p5.Color;
     let c2 = this.color2.getValue(elapsed);
