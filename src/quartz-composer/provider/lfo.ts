@@ -37,7 +37,7 @@ export class WaveGenerator implements Provider {
   /** PWM のデューティ比 */
   pwmRatio: BindableInput<number>;
 
-  /** The result of this patch */
+  /** The resulting value of this patch */
   result: BindableOutput<number>;
 
   private methods: { [type: string]: (dt: number) => number } = {};

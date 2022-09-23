@@ -36,19 +36,23 @@ export type InterpolationType = typeof InterpolationType[keyof typeof Interpolat
  * The duration of the interpolation and its looping mode can also be specified.
  */
 export class Interpolation implements Provider {
+  /** Execution time of the patch */
   patchTime: BindableInput<number> = new BindableInput(-1);
 
-  /** Start value */
+  /** The starting value */
   startValue: BindableInput<number> = new BindableInput(0);
-  /** End value */
+  /** The final value */
   endValue: BindableInput<number> = new BindableInput(1);
-  /** Duration time in seconds between start value and end value */
+  /** The interpolation duration time in seconds */
   duration: BindableInput<number> = new BindableInput(1);
+  /** The relative tension of the interpolated curve */
   tension: BindableInput<number> = new BindableInput(0);
+  /** The repeat mode */
   repeatMode: BindableInput<RepeatMode> = new BindableInput<RepeatMode>(RepeatMode.None);
+  /** The interpolation mode */
   interpolationType: BindableInput<InterpolationType> = new BindableInput(InterpolationType.Linear);
 
-  /** The result of this patch */
+  /** The resulting value of this patch */
   result: BindableOutput<number> = new BindableOutput(0);
 
   constructor(private p: p5) {

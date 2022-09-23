@@ -10,17 +10,31 @@ import { Consumer } from "../core/consumer";
  * normalized to a [0,1] range) and the total number of iterations.
  */
 export class IteratorVariables {
+  /** Current iteration index in the [0, count-1] range */
   currentIndex: BindableOutput<number> = new BindableOutput(0);
+  /** Current normalized loop position in the [0, 1] range */
   currentPosition: BindableOutput<number> = new BindableOutput(0);
+  /** Number of iterations in the loop */
   iterations: BindableOutput<number> = new BindableOutput(0);
 
   constructor(private p: p5) {}
 }
 
+/**
+ * This macro patch renders its subpatches a given number of times.
+ *
+ * Iterator it typically used to create loops in the composition similar to
+ * for() loops in programming languages. The number of iterations is
+ * specified by the "Iterations" input. The index of the current iteration
+ * can be passed to the subpatches by using an Iterator Variables patch
+ * inside this macro patch.
+ */
 export class Iterator implements Consumer {
   layer: number = 1;
 
+  /** number of iterations in the loop */
   iterations: BindableInput<number> = new BindableInput(1);
+  /** Current iteration state of the patch */
   iteratorVariables: IteratorVariables;
 
   private _subConsumers: Consumer[] = [];
@@ -29,6 +43,10 @@ export class Iterator implements Consumer {
     this.iteratorVariables = new IteratorVariables(p);
   }
 
+  /**
+   * Add the patch as subpatch of this.
+   * @param consumer The patch will be contained in the patch
+   */
   addConsumer(consumer: Consumer) {
     consumer.layer += this.layer;
     this._subConsumers.push(consumer);

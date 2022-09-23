@@ -21,14 +21,18 @@ export type GradientDirection = typeof GradientDirection[keyof typeof GradientDi
 export class Gradient implements Consumer {
   layer: number = 0;
 
-  direction: GradientDirection;
+  /** Direction of the gradient */
+  direction: GradientDirection = GradientDirection.Vertical_Upside;
+  /** The first color of the gradient point */
   color1: BindableInput<p5.Color>;
+  /** The second color of the gradient point */
   color2: BindableInput<p5.Color>;
-  color3: BindableInput<p5.Color>;
+  /** The normarized position of the gradient point */
   color2pos: BindableInput<number>;
+  /** The third color of the gradient point */
+  color3: BindableInput<p5.Color>;
 
   constructor(private p: p5) {
-    this.direction = GradientDirection.Vertical_Upside;
     this.color1 = new BindableInput(p.color(0));
     this.color2 = new BindableInput(p.color(127));
     this.color3 = new BindableInput(p.color(255));

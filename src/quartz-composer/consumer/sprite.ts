@@ -1,5 +1,4 @@
 import p5 from "p5";
-import { shader } from "../../setup";
 import { BindableInput } from "../core/bindable";
 import { Consumer } from "../core/consumer";
 
@@ -16,19 +15,34 @@ import { Consumer } from "../core/consumer";
 export class Sprite implements Consumer {
   layer: number = 1;
 
+  /** Position on the X-axis */
   xPosition: BindableInput<number> = new BindableInput(0);
+  /** Position on the Y-axis */
   yPosition: BindableInput<number> = new BindableInput(0);
+  /** Position on the Z-axis */
+  zPosition: BindableInput<number> = new BindableInput(0);
 
+  /** Rotation on the X-axis */
   xRotation: BindableInput<number> = new BindableInput(0);
+  /** Rotation on the Y-axis */
   yRotation: BindableInput<number> = new BindableInput(0);
+  /** Rotation on the Z-axis */
   zRotation: BindableInput<number> = new BindableInput(0);
 
+  /** The width scale of the sprite */
   widthScale: BindableInput<number> = new BindableInput(1);
+  /** The height scale of the sprite */
   heightScale: BindableInput<number> = new BindableInput(1);
 
+  /** The color of the sprite */
+  color: BindableInput<p5.Color>;
+
+  /** The image on the sprite */
   image: BindableInput<p5.Image> = new BindableInput<p5.Image>(new p5.Image());
 
-  constructor(private p: p5) {}
+  constructor(private p: p5) {
+    this.color = new BindableInput(p.color(255, 255, 255, 255));
+  }
 
   updateValue() {}
 
@@ -40,15 +54,20 @@ export class Sprite implements Consumer {
     const w = image.width * this.widthScale.getValue(elapsed);
     const h = image.height * this.heightScale.getValue(elapsed);
 
+    const tintColor = this.color.getValue(elapsed);
+
     this.p.push();
-    // this.p.blendMode(this.p.BURN);
+
+    this.p.imageMode(this.p.CENTER);
     this.p.translate(x, y, this.layer);
     this.p.rotate(this.p.radians(this.zRotation.getValue(elapsed)));
-    this.p.imageMode(this.p.CENTER);
-    this.p.shader(shader);
+
+    this.p.blendMode(this.p.BLEND);
+    this.p.tint(tintColor);
+
     this.p.texture(image);
     this.p.plane(w, h);
-    // this.p.image(image, 0, 0, w, h);
+
     this.p.pop();
   }
 }

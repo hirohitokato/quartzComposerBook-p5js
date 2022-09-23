@@ -10,22 +10,35 @@ import { Consumer } from "../core/consumer";
 export class Transformation3D implements Consumer {
   layer: number = 1;
 
+  /** Execution time of the patch */
   patchTime: BindableInput<number> = new BindableInput(-1);
 
+  /** Origin on the X-axis */
   xOrigin: BindableInput<number> = new BindableInput(0);
+  /** Origin on the Y-axis */
   yOrigin: BindableInput<number> = new BindableInput(0);
+  /** Origin on the Z-axis */
   zOrigin: BindableInput<number> = new BindableInput(0);
 
+  /** Rotation on the X-axis */
   xRotation: BindableInput<number> = new BindableInput(0);
+  /** Rotation on the Y-axis */
   yRotation: BindableInput<number> = new BindableInput(0);
+  /** Rotation on the Z-axis */
   zRotation: BindableInput<number> = new BindableInput(0);
 
+  /** Translation amount on the X-axis */
   xTranslation: BindableInput<number> = new BindableInput(0);
+  /** Translation amount on the Y-axis */
   yTranslation: BindableInput<number> = new BindableInput(0);
+  /** Translation amount on the Z-axis */
   zTranslation: BindableInput<number> = new BindableInput(0);
 
+  /** Scale amount on the X-axis */
   xScale: BindableInput<number> = new BindableInput(1);
+  /** Scale amount on the Y-axis */
   yScale: BindableInput<number> = new BindableInput(1);
+  /** Scale amount on the Z-axis */
   zScale: BindableInput<number> = new BindableInput(1);
 
   private _subConsumers: Consumer[] = [];

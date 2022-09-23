@@ -11,6 +11,7 @@ import { Provider } from "../core/provider";
  * Note that the library times are guaranteed to be positive or null.
  */
 export class PatchTime implements Provider {
+  /** The current time in seconds */
   time: BindableOutput<number> = new BindableOutput(0);
 
   constructor(private p: p5) {

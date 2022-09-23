@@ -36,12 +36,14 @@ export class MathOperator implements Operator {
   }
   private _num_operations: number = 1;
 
-  // input ports
+  /** Initial value to apply operations on */
   initialValue: BindableInput<number> = new BindableInput(0);
+  /** The type of operations */
   operations: BindableInput<MathOperation>[] = [new BindableInput(MathOperation.Add)];
+  /** The operand values */
   operands: BindableInput<number>[] = [new BindableInput(0)];
 
-  // output ports
+  /** Resulting value after operations */
   result: BindableOutput<number> = new BindableOutput(0);
 
   constructor(private p: p5, num_operations: number = 1) {

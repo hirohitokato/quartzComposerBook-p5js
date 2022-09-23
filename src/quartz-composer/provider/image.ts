@@ -9,14 +9,19 @@ import { Provider } from "../core/provider";
  * Note that the image data is saved within the composition.
  */
 export class Image implements Provider {
+  /** The resulting image */
   image: BindableOutput<p5.Image>;
 
-  imagePath: string;
+  /** The file(url) path of the resulting image */
+  get imagePath(): string {
+    return this._imagePath;
+  }
 
+  private _imagePath: string;
   private _image: p5.Image;
 
   constructor(private p: p5, imagePath: string) {
-    this.imagePath = imagePath;
+    this._imagePath = imagePath;
     this._image = p.loadImage(imagePath);
     this.image = new BindableOutput(this._image);
   }
