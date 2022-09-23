@@ -46,6 +46,8 @@ export class Iterator implements Consumer {
   /**
    * Add the patch as subpatch of this.
    * @param consumer The patch will be contained in the patch
+   * @note Make sure you set consumer's layer property before adding.
+   * the iterator does not concern the change after adding.
    */
   addConsumer(consumer: Consumer) {
     consumer.layer += this.layer;

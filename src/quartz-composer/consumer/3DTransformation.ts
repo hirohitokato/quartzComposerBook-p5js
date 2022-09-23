@@ -77,7 +77,6 @@ export class Transformation3D implements Consumer {
     this.p.rotateZ(zRotation);
     this.p.rotateX(xRotation);
     this.p.rotateY(yRotation);
-    this.p.pop();
 
     this.p.scale(xScale, yScale, zScale);
     this.p.translate(xTranslation, yTranslation, zTranslation);
@@ -85,6 +84,7 @@ export class Transformation3D implements Consumer {
     this._subConsumers.forEach((consumer) => {
       consumer.draw(t);
     });
+    this.p.pop();
 
     this.p.pop();
   }

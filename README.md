@@ -2,7 +2,9 @@
 
 This is p5.js implementations of sample codes explained in [Quarts Composer Book](http://www.bnn.co.jp/books/3645/).
 
-![](https://raw.githubusercontent.com/hirohitokato/myAssets/main/quartzComposerBook-p5js/volvox.gif) ![](https://raw.githubusercontent.com/hirohitokato/myAssets/main/quartzComposerBook-p5js/jellyfish.gif) ![](https://raw.githubusercontent.com/hirohitokato/myAssets/main/quartzComposerBook-p5js/trilobite.gif)
+<img src="https://raw.githubusercontent.com/hirohitokato/myAssets/main/quartzComposerBook-p5js/volvox.gif" width="30%">
+<img src="https://raw.githubusercontent.com/hirohitokato/myAssets/main/quartzComposerBook-p5js/jellyfish.gif" width="30%">
+<img src="https://raw.githubusercontent.com/hirohitokato/myAssets/main/quartzComposerBook-p5js/trilobite.gif" width="30%">
 
 ## Setup
 
@@ -20,17 +22,37 @@ If you use vscode, you can do it by selecting `Run Build Task ...`(`Ctrl/Cmd-Shi
 
 Then, open `dist/index.html` via any browser. ([Live Server vscode plugin](https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer) may help you)
 
-### How to change the sample
+## How to change the sample
 
-In `src/setup.ts`, you can find the following code:
+In `src/main.ts`, you can find the following code:
 
 ```typescript
-// let klass = SetupBasic01;
-let klass = SetupBasic02;
-// let klass = ...;
+import { Basic03 } from "./examples/basic03";
+
+setTargetComposition(new Basic03());
 ```
 
-change it as you like. Of course, you can create your own drawings with a similar way.
+change the argument(`Basic03`) as you like. Of course, you can create your own drawings with a similar way.
+
+## Create a custom component
+
+Create a class implemented `QuartzComposition` interface, and pass the instance to `setTargetComposition()`.
+
+```ts
+export class MyCustomComposition implements QuartzComposition {
+  preload(p: p5) {
+    // Load images ...
+  }
+
+  setup(p: p5, consumers: Consumer[]) {
+    // Construct and bind patches.
+    ...
+    // After construction, push all consumers(without inside macro patches)
+    // to the `consumers`.
+  }
+```
+
+`preload()` and `setup()` work as same as p5js' same name function.
 
 ## Notes
 

@@ -3,12 +3,13 @@ import { createSketch } from "./p5-util/sketch";
 import { preload, setTargetComposition, setup } from "./setup";
 import { draw } from "./draw";
 
-import { SetupBasic01 } from "./setup-basic01";
-import { SetupBasic02 } from "./setup-basic02";
-import { SetupBasic03 } from "./setup-basic03";
-import { SetupTmp } from "./setup-tmp";
+import { SetupTmp } from "./examples/setup-tmp";
+import { Basic01 } from "./examples/basic01";
+import { Basic02 } from "./examples/basic02";
+import { Basic03 } from "./examples/basic03";
+import { Basic04 } from "./examples/basic04";
 
-setTargetComposition(new SetupBasic03());
+setTargetComposition(new Basic04());
 
 const sketch = createSketch({
   setup,

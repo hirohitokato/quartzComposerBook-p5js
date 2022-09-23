@@ -1,24 +1,24 @@
 import p5 from "p5";
-import { QuartzComposition } from "./quartzComposition";
-import { Consumer } from "./quartz-composer/core/consumer";
-import { Gradient, GradientDirection } from "./quartz-composer/consumer/gradient";
-import { Image } from "./quartz-composer/provider/image";
-import { Sprite } from "./quartz-composer/consumer/sprite";
-import { Transformation3D } from "./quartz-composer/consumer/3DTransformation";
-import { MathOperation, MathOperator } from "./quartz-composer/processor/math";
-import { Round } from "./quartz-composer/processor/round";
+import { QuartzComposition } from "../quartzComposition";
+import { Consumer } from "../quartz-composer/core/consumer";
+import { Gradient, GradientDirection } from "../quartz-composer/consumer/gradient";
+import { Image } from "../quartz-composer/provider/image";
+import { Sprite } from "../quartz-composer/consumer/sprite";
+import { Transformation3D } from "../quartz-composer/consumer/3DTransformation";
+import { MathOperation, MathOperator } from "../quartz-composer/processor/math";
+import { Round } from "../quartz-composer/processor/round";
 import {
   Interpolation,
   InterpolationType,
   RepeatMode,
-} from "./quartz-composer/provider/interpolation";
-import { Random } from "./quartz-composer/provider/random";
-import { PatchTime } from "./quartz-composer/provider/patchTime";
-import { WaveGenerator, WaveType } from "./quartz-composer/provider/lfo";
+} from "../quartz-composer/provider/interpolation";
+import { Random } from "../quartz-composer/provider/random";
+import { PatchTime } from "../quartz-composer/provider/patchTime";
+import { WaveGenerator, WaveType } from "../quartz-composer/provider/lfo";
 
 let images: { [name: string]: Image } = {};
 
-export class SetupBasic02 implements QuartzComposition {
+export class Basic02 implements QuartzComposition {
   preload(p: p5) {
     images["Body"] = new Image(p, "assets/chapter2/basic_02/Body.png");
     images["Foot"] = new Image(p, "assets/chapter2/basic_02/Foot.png");

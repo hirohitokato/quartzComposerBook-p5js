@@ -47,8 +47,15 @@ export class Sprite implements Consumer {
   updateValue() {}
 
   draw(elapsed: number) {
-    const x = (this.p.width / 2) * this.xPosition.getValue(elapsed);
-    const y = -(this.p.height / 2) * this.yPosition.getValue(elapsed);
+    const x = this.xPosition.getValue(elapsed) * (this.p.width / 2);
+    const y = this.yPosition.getValue(elapsed) * -(this.p.height / 2);
+    // const x = 0;
+    // const y=0;
+    const z = this.zPosition.getValue(elapsed) * 100 + 100;
+
+    const xRotation = this.p.radians(this.xRotation.getValue(elapsed));
+    const yRotation = this.p.radians(this.yRotation.getValue(elapsed));
+    const zRotation = this.p.radians(this.zRotation.getValue(elapsed));
 
     const image = this.image.getValue(elapsed);
     const w = image.width * this.widthScale.getValue(elapsed);
@@ -57,10 +64,11 @@ export class Sprite implements Consumer {
     const tintColor = this.color.getValue(elapsed);
 
     this.p.push();
-
     this.p.imageMode(this.p.CENTER);
-    this.p.translate(x, y, this.layer);
-    this.p.rotate(this.p.radians(this.zRotation.getValue(elapsed)));
+    this.p.translate(x, y, this.layer + z);
+    this.p.rotateZ(zRotation);
+    this.p.rotateX(xRotation);
+    this.p.rotateY(yRotation);
 
     this.p.blendMode(this.p.BLEND);
     this.p.tint(tintColor);

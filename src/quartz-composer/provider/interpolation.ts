@@ -1,6 +1,7 @@
 import p5 from "p5";
 import { BindableInput, BindableOutput } from "../core/bindable";
 import { Provider } from "../core/provider";
+import { Easings } from "../core/tween";
 
 export const RepeatMode = {
   None: "none", // not implemented
@@ -55,11 +56,27 @@ export class Interpolation implements Provider {
   /** The resulting value of this patch */
   result: BindableOutput<number> = new BindableOutput(0);
 
+  private static tweenMethods: Record<InterpolationType, (t: number) => number> = {
+    linear: Easings.linear,
+    quadraticIn: Easings.quadraticIn,
+    quadraticOut: Easings.quadraticOut,
+    quadraticInOut: Easings.quadraticInOut,
+    cubicIn: Easings.cubicIn,
+    cubicOut: Easings.cubicOut,
+    cubicInOut: Easings.cubicInOut,
+    exponentialIn: Easings.exponentialIn,
+    exponentialOut: Easings.exponentialOut,
+    exponentialInOut: Easings.exponentialInOut,
+    sinusodialIn: Easings.sinusoidalIn,
+    sinusodialOut: Easings.sinusoidalOut,
+    sinusodialInOut: Easings.sinusoidalInOut,
+  };
+
   constructor(private p: p5) {
-    this.result.onRequestedValue = this.onRequestedValue.bind(this);
+    this.result.onRequestedValue = this._calculate.bind(this);
   }
 
-  onRequestedValue(elapsed: number): number {
+  private _calculate(elapsed: number): number {
     const patchTime = this.patchTime.getValue(elapsed);
     const t = patchTime == -1 ? elapsed : patchTime;
 
@@ -81,6 +98,8 @@ export class Interpolation implements Provider {
     const startValue = this.startValue.getValue(t);
     const endValue = this.endValue.getValue(t);
 
-    return (endValue - startValue) * progress + startValue;
+    const tweened = Interpolation.tweenMethods[this.interpolationType.getValue(t)](progress);
+
+    return (endValue - startValue) * tweened + startValue;
   }
 }

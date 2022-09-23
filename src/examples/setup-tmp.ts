@@ -1,11 +1,11 @@
 import p5 from "p5";
-import { Consumer } from "./quartz-composer/core/consumer";
-import { Gradient, GradientDirection } from "./quartz-composer/consumer/gradient";
-import { Image } from "./quartz-composer/provider/image";
-import { Interpolation } from "./quartz-composer/provider/interpolation";
-import { Sprite } from "./quartz-composer/consumer/sprite";
-import { Transformation3D } from "./quartz-composer/consumer/3DTransformation";
-import { WaveGenerator, WaveType } from "./quartz-composer/provider/lfo";
+import { Consumer } from "../quartz-composer/core/consumer";
+import { Gradient, GradientDirection } from "../quartz-composer/consumer/gradient";
+import { Image } from "../quartz-composer/provider/image";
+import { Interpolation } from "../quartz-composer/provider/interpolation";
+import { Sprite } from "../quartz-composer/consumer/sprite";
+import { Transformation3D } from "../quartz-composer/consumer/3DTransformation";
+import { WaveGenerator, WaveType } from "../quartz-composer/provider/lfo";
 
 let images: { [name: string]: Image } = {};
 

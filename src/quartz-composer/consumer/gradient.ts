@@ -103,13 +103,13 @@ export class Gradient implements Consumer {
   ) {
     this.p.beginShape();
     this.p.fill(fromColor);
-    this.p.vertex(x + width, from);
+    this.p.vertex(x + width, from, -100);
     this.p.fill(toColor);
-    this.p.vertex(x + width, to);
+    this.p.vertex(x + width, to, -100);
     this.p.fill(toColor);
-    this.p.vertex(x, to);
+    this.p.vertex(x, to, -100);
     this.p.fill(fromColor);
-    this.p.vertex(x, from);
+    this.p.vertex(x, from, -100);
     this.p.endShape();
   }
 
