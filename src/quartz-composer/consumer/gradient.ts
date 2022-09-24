@@ -32,6 +32,8 @@ export class Gradient implements Consumer {
   /** The third color of the gradient point */
   color3: BindableInput<p5.Color>;
 
+  private _coef: number = 0.1;
+
   constructor(private p: p5) {
     this.color1 = new BindableInput(p.color(0));
     this.color2 = new BindableInput(p.color(127));
@@ -40,10 +42,12 @@ export class Gradient implements Consumer {
   }
 
   draw(elapsed: number) {
-    let x = -this.p.width / 2;
-    let y = -this.p.height / 2;
-    let w = this.p.width;
-    let h = this.p.height;
+    this._coef = this.p.height / 2 / this.p.tan(this.p.PI / 6);
+
+    let w = this.p.width * 10;
+    let h = this.p.height * 10;
+    let x = -w / 2;
+    let y = -h / 2;
     let { c1, c2, c3 } = this.getColors(elapsed);
     const c2pos = this.color2pos.getValue(elapsed);
 
@@ -101,15 +105,17 @@ export class Gradient implements Consumer {
     fromColor: p5.Color,
     toColor: p5.Color
   ) {
+    const z = -this._coef * 9 + 1;
+
     this.p.beginShape();
     this.p.fill(fromColor);
-    this.p.vertex(x + width, from, -100);
+    this.p.vertex(x + width, from, z);
     this.p.fill(toColor);
-    this.p.vertex(x + width, to, -100);
+    this.p.vertex(x + width, to, z);
     this.p.fill(toColor);
-    this.p.vertex(x, to, -100);
+    this.p.vertex(x, to, z);
     this.p.fill(fromColor);
-    this.p.vertex(x, from, -100);
+    this.p.vertex(x, from, z);
     this.p.endShape();
   }
 
@@ -121,15 +127,17 @@ export class Gradient implements Consumer {
     fromColor: p5.Color,
     toColor: p5.Color
   ) {
+    const z = -this._coef * 9 + 1;
+
     this.p.beginShape();
     this.p.fill(toColor);
-    this.p.vertex(to, y);
+    this.p.vertex(to, y, z);
     this.p.fill(toColor);
-    this.p.vertex(to, y + height);
+    this.p.vertex(to, y + height, z);
     this.p.fill(fromColor);
-    this.p.vertex(from, y + height);
+    this.p.vertex(from, y + height, z);
     this.p.fill(fromColor);
-    this.p.vertex(from, y);
+    this.p.vertex(from, y, z);
     this.p.endShape();
   }
 }

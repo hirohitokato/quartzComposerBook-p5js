@@ -27,7 +27,7 @@ export class Basic04 implements QuartzComposition {
   setup(p: p5, consumers: Consumer[]) {
     // top layer
     let gradient = new Gradient(p);
-    // consumers.push(gradient);
+    consumers.push(gradient);
     gradient.layer = 1;
     gradient.direction = GradientDirection.Vertical_Upside;
     gradient.color1.setDefaultValue(p.color(93, 120, 191));
