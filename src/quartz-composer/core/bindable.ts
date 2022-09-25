@@ -33,6 +33,8 @@ export class BindableInput<T> {
  */
 export class BindableOutput<T> {
   onRequestedValue: ((atTime: number) => T) | undefined;
+  _listener: any;
+
   protected _initialValue: T;
 
   constructor(initialValue: T) {
@@ -40,13 +42,25 @@ export class BindableOutput<T> {
   }
 
   getValue(atTime: number): T {
+    let result: T;
     if (this.onRequestedValue === undefined) {
-      return this._initialValue;
+      result = this._initialValue;
+    } else {
+      result = this.onRequestedValue(atTime);
     }
-    return this.onRequestedValue(atTime);
+
+    if (this._listener) {
+      this._listener(atTime, result);
+    }
+
+    return result;
   }
 
   updateInitialValue(value: T) {
     this._initialValue = value;
+  }
+
+  hookListener(listener: ((t: number, value: T) => void) | null): void {
+    this._listener = listener;
   }
 }
