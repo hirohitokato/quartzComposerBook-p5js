@@ -51,7 +51,7 @@ export class Sprite implements Consumer {
     const y = this.yPosition.getValue(elapsed) * -(this.p.height / 2);
     // const x = 0;
     // const y=0;
-    const z = this.zPosition.getValue(elapsed) * 100 + 100;
+    const z = this.zPosition.getValue(elapsed) * (this.p.height / 2);
 
     const xRotation = this.p.radians(this.xRotation.getValue(elapsed));
     const yRotation = this.p.radians(this.yRotation.getValue(elapsed));

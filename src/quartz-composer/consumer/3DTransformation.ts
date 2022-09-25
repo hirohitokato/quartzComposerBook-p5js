@@ -56,36 +56,32 @@ export class Transformation3D implements Consumer {
 
     const xOrigin = (this.p.width / 2) * this.xOrigin.getValue(t);
     const yOrigin = (this.p.height / 2) * this.yOrigin.getValue(t);
-    const zOrigin = this.layer + this.zOrigin.getValue(t);
+    const zOrigin = this.layer + (-this.p.height / 2) * this.zOrigin.getValue(t);
 
     const xRotation = this.p.radians(this.xRotation.getValue(t));
     const yRotation = this.p.radians(this.yRotation.getValue(t));
     const zRotation = this.p.radians(this.zRotation.getValue(t));
-
     const xTranslation = (this.p.width / 2) * this.xTranslation.getValue(t);
     const yTranslation = -(this.p.height / 2) * this.yTranslation.getValue(t);
-    const zTranslation = this.layer + this.zTranslation.getValue(t);
+    const zTranslation = this.layer + (-this.p.height / 2) * this.zTranslation.getValue(t);
 
     const xScale = this.xScale.getValue(t);
     const yScale = this.yScale.getValue(t);
     const zScale = this.zScale.getValue(t);
 
-    this.p.push();
-
-    this.p.push();
-    this.p.translate(xOrigin, yOrigin, zOrigin);
-    this.p.rotateZ(zRotation);
-    this.p.rotateX(xRotation);
-    this.p.rotateY(yRotation);
-
-    this.p.scale(xScale, yScale, zScale);
-    this.p.translate(xTranslation, yTranslation, zTranslation);
-
     this._subConsumers.forEach((consumer) => {
-      consumer.draw(t);
-    });
-    this.p.pop();
+      this.p.push();
 
-    this.p.pop();
+      this.p.translate(xOrigin, yOrigin, zOrigin);
+      this.p.rotateZ(zRotation);
+      this.p.rotateX(xRotation);
+      this.p.rotateY(yRotation);
+
+      this.p.scale(xScale, yScale, zScale);
+      this.p.translate(xTranslation, yTranslation, zTranslation);
+      consumer.draw(t);
+
+      this.p.pop();
+    });
   }
 }
