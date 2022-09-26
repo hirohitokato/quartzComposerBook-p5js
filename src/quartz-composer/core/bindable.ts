@@ -33,9 +33,9 @@ export class BindableInput<T> {
  */
 export class BindableOutput<T> {
   onRequestedValue: ((atTime: number) => T) | undefined;
-  _listener: any;
 
   protected _initialValue: T;
+  protected _listener: any;
 
   constructor(initialValue: T) {
     this._initialValue = initialValue;

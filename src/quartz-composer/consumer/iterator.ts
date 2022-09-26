@@ -63,9 +63,11 @@ export class Iterator implements Consumer {
       this.iteratorVariables.currentPosition.updateInitialValue((i + 1) / num_iterations);
 
       this._subConsumers.forEach((consumer, i) => {
+        this.p.push();
         consumer.layer += i * 0.01;
         consumer.draw(atTime);
         consumer.layer -= i * 0.01;
+        this.p.pop();
       });
     }
   }
