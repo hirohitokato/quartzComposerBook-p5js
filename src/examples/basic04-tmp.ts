@@ -35,25 +35,10 @@ export class Basic04 implements QuartzComposition {
     gradient.color3.setDefaultValue(p.color(102, 107, 63));
     gradient.color2pos.setDefaultValue(0.5);
 
-    let component = new Transformation3D(p);
-    component.layer = 2;
-    consumers.push(component);
-
-    let lfoRotZ = new WaveGenerator(p);
-    let lfoTransX = new WaveGenerator(p);
-    component.zRotation.bind(lfoRotZ.result);
-    component.xTranslation.bind(lfoTransX.result);
-    lfoRotZ.type.setDefaultValue(WaveType.Sin);
-    lfoRotZ.period.setDefaultValue(30);
-    lfoRotZ.amplitude.setDefaultValue(10);
-    lfoTransX.type.setDefaultValue(WaveType.Sin);
-    lfoTransX.period.setDefaultValue(10);
-    lfoTransX.amplitude.setDefaultValue(0.2);
-
     // second layer
     let iterator = new Iterator(p);
-    iterator.layer = 1;
-    component.addConsumer(iterator);
+    iterator.layer = 2;
+    consumers.push(iterator);
     iterator.iterations.setDefaultValue(20);
 
     // third layer
@@ -71,20 +56,10 @@ export class Basic04 implements QuartzComposition {
     subComponent.patchTime.bind(calc.result);
 
     let rotZRandom = new Random(p);
-    let transXRandom = new Random(p);
-    let transYRandom = new Random(p);
     rotZRandom.patchTime.bind(iterator.iteratorVariables.currentIndex);
-    rotZRandom.min.setDefaultValue(0);
-    rotZRandom.max.setDefaultValue(60);
-    transXRandom.patchTime.bind(iterator.iteratorVariables.currentIndex);
-    transXRandom.min.setDefaultValue(-2);
-    transXRandom.max.setDefaultValue(2);
-    transYRandom.patchTime.bind(iterator.iteratorVariables.currentIndex);
-    transYRandom.min.setDefaultValue(-0.7);
-    transYRandom.max.setDefaultValue(0.7);
+    rotZRandom.min.setDefaultValue(-10);
+    rotZRandom.max.setDefaultValue(10);
     subComponent.zRotation.bind(rotZRandom.value);
-    subComponent.xTranslation.bind(transXRandom.value);
-    subComponent.yTranslation.bind(transYRandom.value);
 
     // bottom layer
     let sprite = new Sprite(p);
