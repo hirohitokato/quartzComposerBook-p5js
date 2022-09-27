@@ -5,6 +5,7 @@ This is p5.js implementations of sample codes explained in [Quarts Composer Book
 <img src="https://raw.githubusercontent.com/hirohitokato/myAssets/main/quartzComposerBook-p5js/volvox.gif" width="30%">
 <img src="https://raw.githubusercontent.com/hirohitokato/myAssets/main/quartzComposerBook-p5js/jellyfish.gif" width="30%">
 <img src="https://raw.githubusercontent.com/hirohitokato/myAssets/main/quartzComposerBook-p5js/trilobite.gif" width="30%">
+<img src="https://raw.githubusercontent.com/hirohitokato/myAssets/main/quartzComposerBook-p5js/nautilus.gif" width="30%">
 
 ## Setup
 

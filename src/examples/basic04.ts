@@ -74,7 +74,7 @@ export class Basic04 implements QuartzComposition {
     let transXRandom = new Random(p);
     let transYRandom = new Random(p);
     rotZRandom.patchTime.bind(iterator.iteratorVariables.currentIndex);
-    rotZRandom.min.setDefaultValue(0);
+    rotZRandom.min.setDefaultValue(-60);
     rotZRandom.max.setDefaultValue(60);
     transXRandom.patchTime.bind(iterator.iteratorVariables.currentIndex);
     transXRandom.min.setDefaultValue(-2);
