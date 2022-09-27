@@ -72,13 +72,13 @@ export class Transformation3D implements Consumer {
     this._subConsumers.forEach((consumer) => {
       this.p.push();
 
+      this.p.translate(xTranslation, yTranslation, zTranslation);
       this.p.translate(xOrigin, yOrigin, zOrigin);
       this.p.rotateZ(zRotation);
       this.p.rotateX(xRotation);
       this.p.rotateY(yRotation);
-
       this.p.scale(xScale, yScale, zScale);
-      this.p.translate(xTranslation, yTranslation, zTranslation);
+
       consumer.draw(t);
 
       this.p.pop();
