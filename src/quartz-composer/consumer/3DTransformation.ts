@@ -60,7 +60,7 @@ export class Transformation3D implements Consumer {
 
     const xRotation = this.p.radians(this.xRotation.getValue(t));
     const yRotation = this.p.radians(this.yRotation.getValue(t));
-    const zRotation = this.p.radians(this.zRotation.getValue(t));
+    const zRotation = this.p.radians(-this.zRotation.getValue(t));
     const xTranslation = (this.p.width / 2) * this.xTranslation.getValue(t);
     const yTranslation = -(this.p.height / 2) * this.yTranslation.getValue(t);
     const zTranslation = this.layer + (-this.p.height / 2) * this.zTranslation.getValue(t);
