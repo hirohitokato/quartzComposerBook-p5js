@@ -18,12 +18,15 @@ export class Random implements Provider {
   /** The random value */
   value: BindableOutput<number> = new BindableOutput(0);
 
+  private _offset: number;
+
   constructor(private p: p5) {
     this.value.onRequestedValue = this.onRequestedValue.bind(this);
+    this._offset = p.random(0, 1000);
   }
 
   private onRequestedValue(elapsed: number): number {
-    const patchTime = this.patchTime.getValue(elapsed);
+    const patchTime = this.patchTime.getValue(elapsed) + this._offset;
     const min = this.min.getValue(elapsed);
     const max = this.max.getValue(elapsed);
     if (patchTime != -1) {

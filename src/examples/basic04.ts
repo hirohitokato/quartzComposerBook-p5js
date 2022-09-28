@@ -41,8 +41,8 @@ export class Basic04 implements QuartzComposition {
 
     let lfoRotZ = new WaveGenerator(p);
     let lfoTransX = new WaveGenerator(p);
-    component.zRotation.bind(lfoRotZ.result);
-    component.xTranslation.bind(lfoTransX.result);
+    // component.zRotation.bind(lfoRotZ.result);
+    // component.xTranslation.bind(lfoTransX.result);
     lfoRotZ.type.setDefaultValue(WaveType.Sin);
     lfoRotZ.period.setDefaultValue(30);
     lfoRotZ.amplitude.setDefaultValue(10);
@@ -74,14 +74,14 @@ export class Basic04 implements QuartzComposition {
     let transXRandom = new Random(p);
     let transYRandom = new Random(p);
     rotZRandom.patchTime.bind(iterator.iteratorVariables.currentIndex);
-    rotZRandom.min.setDefaultValue(-60);
+    rotZRandom.min.setDefaultValue(0);
     rotZRandom.max.setDefaultValue(60);
     transXRandom.patchTime.bind(iterator.iteratorVariables.currentIndex);
-    transXRandom.min.setDefaultValue(-2);
-    transXRandom.max.setDefaultValue(2);
+    transXRandom.min.setDefaultValue(-2 * 4);
+    transXRandom.max.setDefaultValue(2 * 4);
     transYRandom.patchTime.bind(iterator.iteratorVariables.currentIndex);
-    transYRandom.min.setDefaultValue(-0.7);
-    transYRandom.max.setDefaultValue(0.7);
+    transYRandom.min.setDefaultValue(-1.5 * 4);
+    transYRandom.max.setDefaultValue(1.5 * 4);
     subComponent.zRotation.bind(rotZRandom.value);
     subComponent.xTranslation.bind(transXRandom.value);
     subComponent.yTranslation.bind(transYRandom.value);
