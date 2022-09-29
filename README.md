@@ -2,10 +2,7 @@
 
 This is p5.js implementations of sample codes explained in [Quarts Composer Book](http://www.bnn.co.jp/books/3645/).
 
-<img src="https://raw.githubusercontent.com/hirohitokato/myAssets/main/quartzComposerBook-p5js/volvox.gif" width="30%">
-<img src="https://raw.githubusercontent.com/hirohitokato/myAssets/main/quartzComposerBook-p5js/jellyfish.gif" width="30%">
-<img src="https://raw.githubusercontent.com/hirohitokato/myAssets/main/quartzComposerBook-p5js/trilobite.gif" width="30%">
-<img src="https://raw.githubusercontent.com/hirohitokato/myAssets/main/quartzComposerBook-p5js/nautilus.gif" width="30%">
+<img src="https://raw.githubusercontent.com/hirohitokato/myAssets/main/quartzComposerBook-p5js/volvox.gif" width="25%"><img src="https://raw.githubusercontent.com/hirohitokato/myAssets/main/quartzComposerBook-p5js/jellyfish.gif" width="25%"><img src="https://raw.githubusercontent.com/hirohitokato/myAssets/main/quartzComposerBook-p5js/trilobite.gif" width="25%"><img src="https://raw.githubusercontent.com/hirohitokato/myAssets/main/quartzComposerBook-p5js/nautilus.gif" width="25%">
 
 ## Setup
 
@@ -22,6 +19,29 @@ $pnpm run build
 If you use vscode, you can do it by selecting `Run Build Task ...`(`Ctrl/Cmd-Shift-B`).
 
 Then, open `dist/index.html` via any browser. ([Live Server vscode plugin](https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer) may help you)
+
+## Supported Patches
+
+Supported patches are the following:
+
+* [X] Sprite
+* [X] Image
+* [X] LFO(Wave generator)
+* [X] Interpolation
+* [X] Gradient
+* [X] Patch Time
+* [X] Math
+* [X] Round
+* [X] Random
+* [X] 3D Transformation
+* [X] Iterator
+* [X] Iterator Variables
+* [X] HSL Color
+* [ ] Image Texturing Properties
+* [ ] Cube
+* [ ] Replicate in Space X/Y/Z
+* [ ] Image with String
+* [ ] etc.
 
 ## How to change the sample
 
@@ -59,21 +79,6 @@ export class MyCustomComposition implements QuartzComposition {
 
 * All assets are downloaded from [here](http://download.bnn.co.jp/download/qcb/).
 * This repository uses [p5.js Templates(PETR+)](https://fal-works.github.io/p5js-templates/).
-
-## ToDo
-
-* [X] Patch Time
-* [X] Math
-* [X] Round
-* [X] Random
-* [X] **3D Transformation**
-* [X] **Iterator**
-* [X] Iterator Variables
-* [ ] HSL Color
-* [ ] Image Texturing Properties
-* [ ] Cube
-* [ ] Replicate in Space X/Y/Z
-* [ ] Image with String
 
 ## Special thanks
 
