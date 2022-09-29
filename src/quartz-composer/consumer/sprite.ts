@@ -57,14 +57,9 @@ export class Sprite implements Consumer {
     const yRotation = this.p.radians(this.yRotation.getValue(elapsed));
     const zRotation = this.p.radians(-this.zRotation.getValue(elapsed));
 
-    const image = this.image.getValue(elapsed);
-    const w = image.width * this.widthScale.getValue(elapsed);
-    const h = image.height * this.heightScale.getValue(elapsed);
-
     const tintColor = this.color.getValue(elapsed);
 
     this.p.push();
-    this.p.imageMode(this.p.CENTER);
     this.p.translate(x, y, this.layer + z);
     this.p.rotateZ(zRotation);
     this.p.rotateX(xRotation);
@@ -73,8 +68,25 @@ export class Sprite implements Consumer {
     this.p.blendMode(this.p.BLEND);
     this.p.tint(tintColor);
 
+    this.p.textureMode(this.p.NORMAL);
+    this.p.textureWrap(this.p.REPEAT, this.p.REPEAT);
+
+    // Get an image inside a push/pop stack. It may declare some settings
+    // inside a onRequested method.
+    // cf: ImageTextureProperties patch do so.
+    const image = this.image.getValue(elapsed);
+    const w = image.width * this.widthScale.getValue(elapsed);
+    const h = image.height * this.heightScale.getValue(elapsed);
+    const uOffset = 0.0;
+    const vOffset = 0.0;
+
     this.p.texture(image);
-    this.p.plane(w, h);
+    this.p.beginShape();
+    this.p.vertex(-w / 2, -h / 2, 0, 0 + uOffset, 0 + vOffset);
+    this.p.vertex(+w / 2, -h / 2, 0, 1 + uOffset, 0 + vOffset);
+    this.p.vertex(+w / 2, +h / 2, 0, 1 + uOffset, 1 + vOffset);
+    this.p.vertex(-w / 2, +h / 2, 0, 0 + uOffset, 1 + vOffset);
+    this.p.endShape();
 
     this.p.pop();
   }
