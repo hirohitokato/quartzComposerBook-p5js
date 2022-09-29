@@ -19,6 +19,9 @@ export const setup = (p: p5): void => {
   console.log("setup");
   p.createCanvas(800, 600, p.WEBGL) as any;
 
+  p.textureMode(p.NORMAL);
+  p.textureWrap(p.REPEAT, p.REPEAT);
+
   p.noStroke();
   p.setAttributes("preserveDrawingBuffer", true);
   p.setAttributes("premultipliedAlpha", false);
