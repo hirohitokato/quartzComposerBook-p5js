@@ -1,6 +1,7 @@
 import p5 from "p5";
 import { BindableInput } from "../core/bindable";
 import { Consumer } from "../core/consumer";
+import { ImageData } from "../core/imageData";
 
 /**
  * This patch renders a single quad with optionaly antialiased borders.
@@ -38,10 +39,11 @@ export class Sprite implements Consumer {
   color: BindableInput<p5.Color>;
 
   /** The image on the sprite */
-  image: BindableInput<p5.Image> = new BindableInput<p5.Image>(new p5.Image());
+  image: BindableInput<ImageData>;
 
   constructor(private p: p5) {
     this.color = new BindableInput(p.color(255, 255, 255, 255));
+    this.image = new BindableInput(new ImageData(p, null!));
   }
 
   updateValue() {}
@@ -74,11 +76,13 @@ export class Sprite implements Consumer {
     // Get an image inside a push/pop stack. It may declare some settings
     // inside a onRequested method.
     // cf: ImageTextureProperties patch do so.
-    const image = this.image.getValue(elapsed);
+    const imageData = this.image.getValue(elapsed);
+    const image = imageData.image;
+
     const w = image.width * this.widthScale.getValue(elapsed);
     const h = image.height * this.heightScale.getValue(elapsed);
-    const uOffset = 0.0;
-    const vOffset = 0.0;
+    const uOffset = imageData.matrixTranslationX;
+    const vOffset = imageData.matrixTranslationY;
 
     this.p.texture(image);
     this.p.beginShape();

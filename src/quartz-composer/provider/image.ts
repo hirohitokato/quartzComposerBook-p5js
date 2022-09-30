@@ -1,7 +1,7 @@
 import p5 from "p5";
 import { BindableOutput } from "../core/bindable";
+import { ImageData } from "../core/imageData";
 import { Provider } from "../core/provider";
-
 /**
  * This patch imports an image from a file. Most common image file formats
  * are supported: JPEG, TIFF, PNG, GIF, BMP, TGA, OpenEXR, JPEG 2000, PDF...
@@ -10,7 +10,7 @@ import { Provider } from "../core/provider";
  */
 export class Image implements Provider {
   /** The resulting image */
-  image: BindableOutput<p5.Image>;
+  image: BindableOutput<ImageData>;
 
   /** The file(url) path of the resulting image */
   get imagePath(): string {
@@ -23,6 +23,7 @@ export class Image implements Provider {
   constructor(private p: p5, imagePath: string) {
     this._imagePath = imagePath;
     this._image = p.loadImage(imagePath);
-    this.image = new BindableOutput(this._image);
+    let imageData = new ImageData(p, this._image);
+    this.image = new BindableOutput(imageData);
   }
 }
