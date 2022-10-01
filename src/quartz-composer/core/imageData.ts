@@ -18,6 +18,7 @@ export type MipmappingType = typeof MipmappingType[keyof typeof MipmappingType];
 export class ImageData {
   /** The original image */
   image: p5.Image;
+  filePath: string = "";
 
   /** The texture target */
   target: TextureTargetType = TextureTargetType.TwoD;

@@ -48,6 +48,7 @@ export class Transformation3D implements Consumer {
   addConsumer(consumer: Consumer) {
     consumer.layer += this.layer;
     this._subConsumers.push(consumer);
+    this._subConsumers.sort((a, b) => (a.layer > b.layer ? 1 : -1));
   }
 
   draw(atTime: number): void {

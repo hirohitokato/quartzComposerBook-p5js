@@ -71,7 +71,6 @@ export class Sprite implements Consumer {
     this.p.tint(tintColor);
 
     this.p.textureMode(this.p.NORMAL);
-    this.p.textureWrap(this.p.REPEAT, this.p.REPEAT);
 
     // Get an image inside a push/pop stack. It may declare some settings
     // inside a onRequested method.
@@ -85,6 +84,15 @@ export class Sprite implements Consumer {
     const vOffset = imageData.matrixTranslationY;
 
     this.p.texture(image);
+
+    if (uOffset != 0 || vOffset != 0) {
+      this.p.textureWrap(this.p.REPEAT, this.p.REPEAT);
+      // console.log(`[REPEAT] : [${imageData.filePath}]`);
+    } else {
+      this.p.textureWrap(this.p.CLAMP, this.p.CLAMP);
+      // console.log(`[CLAMP] : [${imageData.filePath}]`);
+    }
+
     this.p.beginShape();
     this.p.vertex(-w / 2, -h / 2, 0, 0 + uOffset, 0 + vOffset);
     this.p.vertex(+w / 2, -h / 2, 0, 1 + uOffset, 0 + vOffset);

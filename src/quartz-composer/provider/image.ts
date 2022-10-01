@@ -24,6 +24,7 @@ export class Image implements Provider {
     this._imagePath = imagePath;
     this._image = p.loadImage(imagePath);
     let imageData = new ImageData(p, this._image);
+    imageData.filePath = imagePath;
     this.image = new BindableOutput(imageData);
   }
 }
