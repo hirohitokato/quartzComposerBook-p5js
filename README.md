@@ -2,7 +2,13 @@
 
 This is p5.js implementations of sample codes explained in [Quarts Composer Book](http://www.bnn.co.jp/books/3645/).
 
-<img src="https://raw.githubusercontent.com/hirohitokato/myAssets/main/quartzComposerBook-p5js/volvox.gif" width="25%"><img src="https://raw.githubusercontent.com/hirohitokato/myAssets/main/quartzComposerBook-p5js/jellyfish.gif" width="25%"><img src="https://raw.githubusercontent.com/hirohitokato/myAssets/main/quartzComposerBook-p5js/trilobite.gif" width="25%"><img src="https://raw.githubusercontent.com/hirohitokato/myAssets/main/quartzComposerBook-p5js/nautilus.gif" width="25%">
+<img src="https://raw.githubusercontent.com/hirohitokato/myAssets/main/quartzComposerBook-p5js/volvox.gif" width="25%"><img src="https://raw.githubusercontent.com/hirohitokato/myAssets/main/quartzComposerBook-p5js/jellyfish.gif" width="25%"><img src="https://raw.githubusercontent.com/hirohitokato/myAssets/main/quartzComposerBook-p5js/trilobite.gif" width="25%"><img src="https://raw.githubusercontent.com/hirohitokato/myAssets/main/quartzComposerBook-p5js/nautilus.gif" width="25%"><img src="https://raw.githubusercontent.com/hirohitokato/myAssets/main/quartzComposerBook-p5js/fish.gif" width="25%">
+
+You can write the following composition as follows:
+
+```ts
+```
+
 
 ## Setup
 
@@ -43,7 +49,7 @@ Supported patches are the following:
 * [ ] Image with String
 * [ ] etc.
 
-## How to change the sample
+## How to change the target composition
 
 In `src/main.ts`, you can find the following code:
 
