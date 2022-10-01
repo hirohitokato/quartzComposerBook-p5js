@@ -17,6 +17,7 @@ import { Iterator } from "../quartz-composer/consumer/iterator";
 import { Random } from "../quartz-composer/provider/random";
 import { HSLColor } from "../quartz-composer/processor/hslColor";
 import { ImageTexturingProperties } from "../quartz-composer/processor/imageTexturingProperties";
+import { Spline } from "../quartz-composer/core/spline";
 
 let images: { [name: string]: Image } = {};
 
@@ -29,6 +30,8 @@ export class Basic05 implements QuartzComposition {
   }
 
   setup(p: p5, consumers: Consumer[]) {
+    let spline = new Spline([0, 0.5, 1], [0, 1, 0]);
+
     // top layer
     let gradient = new Gradient(p);
     consumers.push(gradient);
@@ -135,8 +138,9 @@ export class Basic05 implements QuartzComposition {
 
     // カーブが山なりにできるようにする
     let yPosInterp = new Interpolation(p);
+    yPosInterp.setCustomCurve(spline.at.bind(spline));
     yPosInterp.startValue.setDefaultValue(-1);
-    yPosInterp.endValue.setDefaultValue(6);
+    yPosInterp.endValue.setDefaultValue(0.3);
     yPosInterp.duration.setDefaultValue(6);
     yPosInterp.repeatMode.setDefaultValue(RepeatMode.Loop);
     fish.yPosition.bind(yPosInterp.result);
@@ -147,7 +151,9 @@ export class Basic05 implements QuartzComposition {
     zRotInterp.duration.setDefaultValue(6);
     fish.zRotation.bind(zRotInterp.result);
 
+    // カーブが山なりにできるようにする
     let alphaInterp = new Interpolation(p);
+    alphaInterp.setCustomCurve(spline.at.bind(spline));
     alphaInterp.startValue.setDefaultValue(0);
     alphaInterp.endValue.setDefaultValue(1);
     alphaInterp.duration.setDefaultValue(6);

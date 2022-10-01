@@ -25,6 +25,7 @@ export const InterpolationType = {
   SinusodialIn: "sinusodialIn",
   SinusodialOut: "sinusodialOut",
   SinusodialInOut: "sinusodialInOut",
+  Custom: "custom",
 } as const;
 export type InterpolationType = typeof InterpolationType[keyof typeof InterpolationType];
 
@@ -56,7 +57,7 @@ export class Interpolation implements Provider {
   /** The resulting value of this patch */
   result: BindableOutput<number> = new BindableOutput(0);
 
-  private static tweenMethods: Record<InterpolationType, (t: number) => number> = {
+  private tweenMethods: Record<InterpolationType, (t: number) => number> = {
     linear: Easings.linear,
     quadraticIn: Easings.quadraticIn,
     quadraticOut: Easings.quadraticOut,
@@ -70,10 +71,17 @@ export class Interpolation implements Provider {
     sinusodialIn: Easings.sinusoidalIn,
     sinusodialOut: Easings.sinusoidalOut,
     sinusodialInOut: Easings.sinusoidalInOut,
+    custom: this.custom.bind(this),
   };
+  private _customCurve: ((t: number) => number) | undefined;
 
   constructor(private p: p5) {
     this.result.onRequestedValue = this._calculate.bind(this);
+  }
+
+  setCustomCurve(func: (t: number) => number) {
+    this._customCurve = func;
+    this.interpolationType.setDefaultValue(InterpolationType.Custom);
   }
 
   private _calculate(elapsed: number): number {
@@ -98,8 +106,12 @@ export class Interpolation implements Provider {
     const startValue = this.startValue.getValue(t);
     const endValue = this.endValue.getValue(t);
 
-    const tweened = Interpolation.tweenMethods[this.interpolationType.getValue(t)](progress);
+    const tweened = this.tweenMethods[this.interpolationType.getValue(t)](progress);
 
     return (endValue - startValue) * tweened + startValue;
+  }
+
+  private custom(t: number): number {
+    return this._customCurve!(t);
   }
 }
