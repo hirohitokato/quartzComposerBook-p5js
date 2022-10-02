@@ -9,8 +9,9 @@ import { Basic02 } from "./examples/basic02";
 import { Basic03 } from "./examples/basic03";
 import { Basic04 } from "./examples/basic04";
 import { Basic05 } from "./examples/basic05";
+import { Advanced01 } from "./examples/advanced01";
 
-setTargetComposition(new Basic05());
+setTargetComposition(new Advanced01());
 
 const sketch = createSketch({
   setup,

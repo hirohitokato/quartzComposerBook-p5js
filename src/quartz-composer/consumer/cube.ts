@@ -3,7 +3,7 @@ import { BindableInput } from "../core/bindable";
 import { Consumer } from "../core/consumer";
 import { ImageData } from "../core/imageData";
 
-class Position {
+class Point {
   constructor(public x: number, public y: number, public z: number) {}
 }
 
@@ -71,18 +71,120 @@ export class Cube implements Consumer {
     this.bottomImage = new BindableInput(new ImageData(p, null!));
   }
 
-  draw(atTime: number): void {}
+  draw(atTime: number): void {
+    const x = this.xPosition.getValue(atTime) * (this.p.width / 2);
+    const y = this.yPosition.getValue(atTime) * -(this.p.height / 2);
+    const z = this.zPosition.getValue(atTime) * (this.p.height / 2);
+    const w = this.width.getValue(atTime) * (this.p.width / 2);
+    const h = this.height.getValue(atTime) * (this.p.height / 2);
+    const d = this.depth.getValue(atTime) * (this.p.height / 2);
+    const w2 = w / 2;
+    const h2 = h / 2;
+    const d2 = d / 2;
+    const frontColor = this.frontColor.getValue(atTime);
+    const leftColor = this.leftColor.getValue(atTime);
+    const rightColor = this.rightColor.getValue(atTime);
+    const backColor = this.backColor.getValue(atTime);
+    const topColor = this.topColor.getValue(atTime);
+    const bottomColor = this.bottomColor.getValue(atTime);
+    const frontImage = this.frontImage.getValue(atTime);
+    const leftImage = this.leftImage.getValue(atTime);
+    const rightImage = this.rightImage.getValue(atTime);
+    const backImage = this.backImage.getValue(atTime);
+    const topImage = this.topImage.getValue(atTime);
+    const bottomImage = this.bottomImage.getValue(atTime);
 
-  private drawPlane(a: Position, b: Position, c: Position, d: Position, color: p5.Color) {
+    const xRotation = this.p.radians(this.xRotation.getValue(atTime));
+    const yRotation = this.p.radians(this.yRotation.getValue(atTime));
+    const zRotation = this.p.radians(-this.zRotation.getValue(atTime));
+
+    const planes = [
+      // front
+      {
+        a: new Point(x - w2, y - h2, z + d2),
+        b: new Point(x + w2, y - h2, z + d2),
+        c: new Point(x + w2, y + h2, z + d2),
+        d: new Point(x - w2, y + h2, z + d2),
+        color: frontColor,
+        image: frontImage,
+      },
+      // left
+      {
+        a: new Point(x - w2, y - h2, z + d2),
+        b: new Point(x - w2, y - h2, z - d2),
+        c: new Point(x - w2, y + h2, z - d2),
+        d: new Point(x - w2, y + h2, z + d2),
+        color: leftColor,
+        image: leftImage,
+      },
+      // right
+      {
+        a: new Point(x + w2, y - h2, z + d2),
+        b: new Point(x + w2, y - h2, z - d2),
+        c: new Point(x + w2, y + h2, z - d2),
+        d: new Point(x + w2, y + h2, z + d2),
+        color: rightColor,
+        image: rightImage,
+      },
+      // back
+      {
+        a: new Point(x - w2, y - h2, z - d2),
+        b: new Point(x + w2, y - h2, z - d2),
+        c: new Point(x + w2, y + h2, z - d2),
+        d: new Point(x - w2, y + h2, z - d2),
+        color: backColor,
+        image: backImage,
+      },
+      // top
+      {
+        a: new Point(x - w2, y - h2, z + d2),
+        b: new Point(x - w2, y - h2, z - d2),
+        c: new Point(x + w2, y - h2, z - d2),
+        d: new Point(x + w2, y - h2, z + d2),
+        color: topColor,
+        image: topImage,
+      },
+      // bottom
+      {
+        a: new Point(x - w2, y + h2, z + d2),
+        b: new Point(x - w2, y + h2, z - d2),
+        c: new Point(x + w2, y + h2, z - d2),
+        d: new Point(x + w2, y + h2, z + d2),
+        color: bottomColor,
+        image: bottomImage,
+      },
+    ];
+
+    this.p.push();
+    this.p.rotateZ(zRotation);
+    this.p.rotateX(xRotation);
+    this.p.rotateY(yRotation);
+
+    for (const plane of planes) {
+      this.drawPlane(plane.a, plane.b, plane.c, plane.d, plane.color, plane.image);
+    }
+    this.p.pop();
+  }
+
+  private drawPlane(a: Point, b: Point, c: Point, d: Point, color: p5.Color, imageData: ImageData) {
+    const uOffset = imageData.matrixTranslationX;
+    const vOffset = imageData.matrixTranslationY;
+
+    this.p.blendMode(this.p.BLEND);
+
+    if (imageData.image) {
+      this.p.textureMode(this.p.NORMAL);
+      this.p.texture(imageData!.image);
+    }
     this.p.beginShape();
     this.p.fill(color);
-    this.p.vertex(a.x, a.y, a.z);
+    this.p.vertex(a.x, a.y, a.z, 0 + uOffset, 0 + vOffset);
     this.p.fill(color);
-    this.p.vertex(b.x, b.y, b.z);
+    this.p.vertex(b.x, b.y, b.z, 1 + uOffset, 0 + vOffset);
     this.p.fill(color);
-    this.p.vertex(c.x, c.y, c.z);
+    this.p.vertex(c.x, c.y, c.z, 1 + uOffset, 1 + vOffset);
     this.p.fill(color);
-    this.p.vertex(d.x, d.y, d.z);
+    this.p.vertex(d.x, d.y, d.z, 0 + uOffset, 1 + vOffset);
     this.p.endShape();
   }
 }
