@@ -13,16 +13,21 @@ export class Advanced01 implements QuartzComposition {
 
   setup(p: p5, consumers: Consumer[]) {
     let cube = new Cube(p);
-    cube.width.setDefaultValue(0.25);
-    cube.height.setDefaultValue(0.5);
-    cube.depth.setDefaultValue(0.5);
-    // cube.width.setDefaultValue(3);
-    // cube.height.setDefaultValue(3.5);
-    // cube.depth.setDefaultValue(3.5);
-    cube.xRotation.setDefaultValue(20);
-    cube.yRotation.setDefaultValue(20);
-    cube.zRotation.setDefaultValue(20);
-    // cube.frontImage.bind(images["wall"]!.image);
+    cube.width.setDefaultValue(3);
+    cube.height.setDefaultValue(3);
+    cube.depth.setDefaultValue(3);
+    cube.frontImage.bind(images["wall"]!.image);
+    cube.frontColor.setDefaultValue(p.color("#787F36"));
+    cube.leftImage.bind(images["wall"]!.image);
+    cube.leftColor.setDefaultValue(p.color("#1F5D94"));
+    cube.rightImage.bind(images["wall"]!.image);
+    cube.rightColor.setDefaultValue(p.color("#1F5D94"));
+    cube.backImage.bind(images["wall"]!.image);
+    cube.backColor.setDefaultValue(p.color("#787F36"));
+    cube.topImage.bind(images["wall"]!.image);
+    cube.topColor.setDefaultValue(p.color("#820000"));
+    cube.bottomImage.bind(images["wall"]!.image);
+    cube.bottomColor.setDefaultValue(p.color("#820000"));
     consumers.push(cube);
   }
 }

@@ -174,17 +174,36 @@ export class Cube implements Consumer {
 
     if (imageData.image) {
       this.p.textureMode(this.p.NORMAL);
+      this.p.tint(color);
       this.p.texture(imageData!.image);
     }
+
+    // Draw cube
     this.p.beginShape();
-    this.p.fill(color);
-    this.p.vertex(a.x, a.y, a.z, 0 + uOffset, 0 + vOffset);
-    this.p.fill(color);
-    this.p.vertex(b.x, b.y, b.z, 1 + uOffset, 0 + vOffset);
-    this.p.fill(color);
-    this.p.vertex(c.x, c.y, c.z, 1 + uOffset, 1 + vOffset);
-    this.p.fill(color);
-    this.p.vertex(d.x, d.y, d.z, 0 + uOffset, 1 + vOffset);
+    if (!imageData.image) {
+      this.p.fill(color);
+      this.p.vertex(a.x, a.y, a.z);
+    } else {
+      this.p.vertex(a.x, a.y, a.z, 0 + uOffset, 0 + vOffset);
+    }
+    if (!imageData.image) {
+      this.p.fill(color);
+      this.p.vertex(b.x, b.y, b.z);
+    } else {
+      this.p.vertex(b.x, b.y, b.z, 1 + uOffset, 0 + vOffset);
+    }
+    if (!imageData.image) {
+      this.p.fill(color);
+      this.p.vertex(c.x, c.y, c.z);
+    } else {
+      this.p.vertex(c.x, c.y, c.z, 1 + uOffset, 1 + vOffset);
+    }
+    if (!imageData.image) {
+      this.p.fill(color);
+      this.p.vertex(d.x, d.y, d.z);
+    } else {
+      this.p.vertex(d.x, d.y, d.z, 0 + uOffset, 1 + vOffset);
+    }
     this.p.endShape();
   }
 }
