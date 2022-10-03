@@ -25,6 +25,7 @@ export class ReplicateInSpace implements Consumer {
 
   /** Number of copies */
   copies: BindableInput<number> = new BindableInput(1);
+
   /** The interpolation mode */
   interpolation: BindableInput<InterpolationType> = new BindableInput(InterpolationType.Linear);
   /** Final uniform scale */
@@ -73,6 +74,8 @@ export class ReplicateInSpace implements Consumer {
   }
 
   draw(atTime: number): void {
+    const num_copies = this.copies.getValue(atTime);
+
     throw new Error("Method not implemented.");
   }
 }
