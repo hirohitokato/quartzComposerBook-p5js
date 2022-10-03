@@ -1,7 +1,7 @@
 import p5 from "p5";
 import { BindableInput, BindableOutput } from "../core/bindable";
 import { Provider } from "../core/provider";
-import { Easings } from "../core/tween";
+import { Easings, InterpolationType } from "../core/tween";
 
 export const RepeatMode = {
   None: "none", // not implemented
@@ -10,24 +10,6 @@ export const RepeatMode = {
   MirroredLoopOnce: "mirroredLoopOnce", // not implemented
 } as const;
 export type RepeatMode = typeof RepeatMode[keyof typeof RepeatMode];
-
-export const InterpolationType = {
-  Linear: "linear",
-  QuadraticIn: "quadraticIn",
-  QuadraticOut: "quadraticOut",
-  QuadraticInOut: "quadraticInOut",
-  CubicIn: "cubicIn",
-  CubicOut: "cubicOut",
-  CubicInOut: "cubicInOut",
-  ExponentialIn: "exponentialIn",
-  ExponentialOut: "exponentialOut",
-  ExponentialInOut: "exponentialInOut",
-  SinusodialIn: "sinusodialIn",
-  SinusodialOut: "sinusodialOut",
-  SinusodialInOut: "sinusodialInOut",
-  Custom: "custom",
-} as const;
-export type InterpolationType = typeof InterpolationType[keyof typeof InterpolationType];
 
 /**
  * This patch interpolates between two numerical values over time.

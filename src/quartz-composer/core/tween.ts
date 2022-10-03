@@ -1,3 +1,21 @@
+export const InterpolationType = {
+  Linear: "linear",
+  QuadraticIn: "quadraticIn",
+  QuadraticOut: "quadraticOut",
+  QuadraticInOut: "quadraticInOut",
+  CubicIn: "cubicIn",
+  CubicOut: "cubicOut",
+  CubicInOut: "cubicInOut",
+  ExponentialIn: "exponentialIn",
+  ExponentialOut: "exponentialOut",
+  ExponentialInOut: "exponentialInOut",
+  SinusodialIn: "sinusodialIn",
+  SinusodialOut: "sinusodialOut",
+  SinusodialInOut: "sinusodialInOut",
+  Custom: "custom",
+} as const;
+export type InterpolationType = typeof InterpolationType[keyof typeof InterpolationType];
+
 /**
  * MIT License
  *

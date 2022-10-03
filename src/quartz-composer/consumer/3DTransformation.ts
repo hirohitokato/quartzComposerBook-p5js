@@ -14,37 +14,43 @@ export class Transformation3D implements Consumer {
   patchTime: BindableInput<number> = new BindableInput(-1);
 
   /** Origin on the X-axis */
-  xOrigin: BindableInput<number> = new BindableInput(0);
+  originX: BindableInput<number> = new BindableInput(0);
   /** Origin on the Y-axis */
-  yOrigin: BindableInput<number> = new BindableInput(0);
+  originY: BindableInput<number> = new BindableInput(0);
   /** Origin on the Z-axis */
-  zOrigin: BindableInput<number> = new BindableInput(0);
+  originZ: BindableInput<number> = new BindableInput(0);
 
   /** Rotation on the X-axis */
-  xRotation: BindableInput<number> = new BindableInput(0);
+  rotationX: BindableInput<number> = new BindableInput(0);
   /** Rotation on the Y-axis */
-  yRotation: BindableInput<number> = new BindableInput(0);
+  rotationY: BindableInput<number> = new BindableInput(0);
   /** Rotation on the Z-axis */
-  zRotation: BindableInput<number> = new BindableInput(0);
+  rotationZ: BindableInput<number> = new BindableInput(0);
 
   /** Translation amount on the X-axis */
-  xTranslation: BindableInput<number> = new BindableInput(0);
+  translationX: BindableInput<number> = new BindableInput(0);
   /** Translation amount on the Y-axis */
-  yTranslation: BindableInput<number> = new BindableInput(0);
+  translationY: BindableInput<number> = new BindableInput(0);
   /** Translation amount on the Z-axis */
-  zTranslation: BindableInput<number> = new BindableInput(0);
+  translationZ: BindableInput<number> = new BindableInput(0);
 
   /** Scale amount on the X-axis */
-  xScale: BindableInput<number> = new BindableInput(1);
+  scaleX: BindableInput<number> = new BindableInput(1);
   /** Scale amount on the Y-axis */
-  yScale: BindableInput<number> = new BindableInput(1);
+  scaleY: BindableInput<number> = new BindableInput(1);
   /** Scale amount on the Z-axis */
-  zScale: BindableInput<number> = new BindableInput(1);
+  scaleZ: BindableInput<number> = new BindableInput(1);
 
   private _subConsumers: Consumer[] = [];
 
   constructor(private p: p5) {}
 
+  /**
+   * Add the consumer patch as one of subpatches of this patch.
+   * @param consumer The patch will be contained in the patch
+   * @note Make sure you must set consumer's layer property before adding.
+   * the macro patch does not concern the change after adding.
+   */
   addConsumer(consumer: Consumer) {
     consumer.layer += this.layer;
     this._subConsumers.push(consumer);
@@ -55,20 +61,20 @@ export class Transformation3D implements Consumer {
     const patchTime = this.patchTime.getValue(atTime);
     const t = patchTime == -1 ? atTime : patchTime;
 
-    const xOrigin = (this.p.width / 2) * this.xOrigin.getValue(t);
-    const yOrigin = (this.p.height / 2) * this.yOrigin.getValue(t);
-    const zOrigin = this.layer + (-this.p.height / 2) * this.zOrigin.getValue(t);
+    const xOrigin = (this.p.width / 2) * this.originX.getValue(t);
+    const yOrigin = (this.p.height / 2) * this.originY.getValue(t);
+    const zOrigin = this.layer + (-this.p.height / 2) * this.originZ.getValue(t);
 
-    const xRotation = this.p.radians(this.xRotation.getValue(t));
-    const yRotation = this.p.radians(this.yRotation.getValue(t));
-    const zRotation = this.p.radians(-this.zRotation.getValue(t));
-    const xTranslation = (this.p.width / 2) * this.xTranslation.getValue(t);
-    const yTranslation = -(this.p.height / 2) * this.yTranslation.getValue(t);
-    const zTranslation = this.layer + (-this.p.height / 2) * this.zTranslation.getValue(t);
+    const xRotation = this.p.radians(this.rotationX.getValue(t));
+    const yRotation = this.p.radians(this.rotationY.getValue(t));
+    const zRotation = this.p.radians(-this.rotationZ.getValue(t));
+    const xTranslation = (this.p.width / 2) * this.translationX.getValue(t);
+    const yTranslation = -(this.p.height / 2) * this.translationY.getValue(t);
+    const zTranslation = this.layer + (-this.p.height / 2) * this.translationZ.getValue(t);
 
-    const xScale = this.xScale.getValue(t);
-    const yScale = this.yScale.getValue(t);
-    const zScale = this.zScale.getValue(t);
+    const xScale = this.scaleX.getValue(t);
+    const yScale = this.scaleY.getValue(t);
+    const zScale = this.scaleZ.getValue(t);
 
     this._subConsumers.forEach((consumer) => {
       this.p.push();

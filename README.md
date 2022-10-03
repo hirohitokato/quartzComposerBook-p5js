@@ -44,7 +44,7 @@ Supported patches are the following:
 * [X] Iterator Variables
 * [X] HSL Color
 * [X] Image Texturing Properties
-* [ ] Cube
+* [X] Cube
 * [ ] Replicate in Space X/Y/Z
 * [ ] Image with String
 * [ ] etc.

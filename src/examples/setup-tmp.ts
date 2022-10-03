@@ -15,8 +15,8 @@ export class SetupTmp implements QuartzComposition {
   setup(p: p5, consumers: Consumer[]) {
     let sprite = new Sprite(p);
 
-    sprite.xPosition.setDefaultValue(-0.05);
-    sprite.yPosition.setDefaultValue(-0.05);
+    sprite.positionX.setDefaultValue(-0.05);
+    sprite.positionY.setDefaultValue(-0.05);
 
     sprite.image.bind(images["volvox"]!.image);
 

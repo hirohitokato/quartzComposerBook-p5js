@@ -17,18 +17,18 @@ export class Sprite implements Consumer {
   layer: number = 1;
 
   /** Position on the X-axis */
-  xPosition: BindableInput<number> = new BindableInput(0);
+  positionX: BindableInput<number> = new BindableInput(0);
   /** Position on the Y-axis */
-  yPosition: BindableInput<number> = new BindableInput(0);
+  positionY: BindableInput<number> = new BindableInput(0);
   /** Position on the Z-axis */
-  zPosition: BindableInput<number> = new BindableInput(0);
+  positionZ: BindableInput<number> = new BindableInput(0);
 
   /** Rotation on the X-axis */
-  xRotation: BindableInput<number> = new BindableInput(0);
+  rotationX: BindableInput<number> = new BindableInput(0);
   /** Rotation on the Y-axis */
-  yRotation: BindableInput<number> = new BindableInput(0);
+  rotationY: BindableInput<number> = new BindableInput(0);
   /** Rotation on the Z-axis */
-  zRotation: BindableInput<number> = new BindableInput(0);
+  rotationZ: BindableInput<number> = new BindableInput(0);
 
   /** The width scale of the sprite */
   widthScale: BindableInput<number> = new BindableInput(1);
@@ -49,15 +49,15 @@ export class Sprite implements Consumer {
   updateValue() {}
 
   draw(elapsed: number) {
-    const x = this.xPosition.getValue(elapsed) * (this.p.width / 2);
-    const y = this.yPosition.getValue(elapsed) * -(this.p.height / 2);
+    const x = this.positionX.getValue(elapsed) * (this.p.width / 2);
+    const y = this.positionY.getValue(elapsed) * -(this.p.height / 2);
     // const x = 0;
     // const y=0;
-    const z = this.zPosition.getValue(elapsed) * (this.p.height / 2);
+    const z = this.positionZ.getValue(elapsed) * (this.p.height / 2);
 
-    const xRotation = this.p.radians(this.xRotation.getValue(elapsed));
-    const yRotation = this.p.radians(this.yRotation.getValue(elapsed));
-    const zRotation = this.p.radians(-this.zRotation.getValue(elapsed));
+    const xRotation = this.p.radians(this.rotationX.getValue(elapsed));
+    const yRotation = this.p.radians(this.rotationY.getValue(elapsed));
+    const zRotation = this.p.radians(-this.rotationZ.getValue(elapsed));
 
     const tintColor = this.color.getValue(elapsed);
 

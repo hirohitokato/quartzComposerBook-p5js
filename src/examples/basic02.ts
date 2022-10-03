@@ -7,14 +7,11 @@ import { Sprite } from "../quartz-composer/consumer/sprite";
 import { Transformation3D } from "../quartz-composer/consumer/3DTransformation";
 import { MathOperation, MathOperator } from "../quartz-composer/processor/math";
 import { Round } from "../quartz-composer/processor/round";
-import {
-  Interpolation,
-  InterpolationType,
-  RepeatMode,
-} from "../quartz-composer/provider/interpolation";
+import { Interpolation, RepeatMode } from "../quartz-composer/provider/interpolation";
 import { Random } from "../quartz-composer/provider/random";
 import { PatchTime } from "../quartz-composer/provider/patchTime";
 import { WaveGenerator, WaveType } from "../quartz-composer/provider/lfo";
+import { InterpolationType } from "../quartz-composer/core/tween";
 
 let images: { [name: string]: Image } = {};
 
@@ -64,7 +61,7 @@ export class Basic02 implements QuartzComposition {
     jellyfish.addConsumer(foot);
     jellyfish.addConsumer(body);
     jellyfish.layer = 2;
-    jellyfish.zTranslation.setDefaultValue(3);
+    jellyfish.translationZ.setDefaultValue(3);
 
     let patchtime = new PatchTime(p);
     let divider = new MathOperator(p, 1);
@@ -75,10 +72,10 @@ export class Basic02 implements QuartzComposition {
     divider.operands[0]!.setDefaultValue(10);
     roundtime.value.bind(divider.result);
     randomtime.patchTime.bind(roundtime.floorValue);
-    jellyfish.xTranslation.bind(randomtime.value);
+    jellyfish.translationX.bind(randomtime.value);
 
     let interp = new Interpolation(p);
-    jellyfish.yTranslation.bind(interp.result);
+    jellyfish.translationY.bind(interp.result);
     interp.startValue.setDefaultValue(-1.75);
     interp.endValue.setDefaultValue(1.75);
     interp.duration.setDefaultValue(10);

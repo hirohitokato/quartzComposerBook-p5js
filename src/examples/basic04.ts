@@ -1,16 +1,13 @@
 import p5 from "p5";
 import { QuartzComposition } from "../quartzComposition";
 import { Consumer } from "../quartz-composer/core/consumer";
+import { InterpolationType } from "../quartz-composer/core/tween";
 import { Gradient, GradientDirection } from "../quartz-composer/consumer/gradient";
 import { Image } from "../quartz-composer/provider/image";
 import { Sprite } from "../quartz-composer/consumer/sprite";
 import { Transformation3D } from "../quartz-composer/consumer/3DTransformation";
 import { MathOperation, MathOperator } from "../quartz-composer/processor/math";
-import {
-  Interpolation,
-  InterpolationType,
-  RepeatMode,
-} from "../quartz-composer/provider/interpolation";
+import { Interpolation, RepeatMode } from "../quartz-composer/provider/interpolation";
 import { PatchTime } from "../quartz-composer/provider/patchTime";
 import { WaveGenerator, WaveType } from "../quartz-composer/provider/lfo";
 import { Iterator } from "../quartz-composer/consumer/iterator";
@@ -82,9 +79,9 @@ export class Basic04 implements QuartzComposition {
     transYRandom.patchTime.bind(iterator.iteratorVariables.currentIndex);
     transYRandom.min.setDefaultValue(-1.5 * 4);
     transYRandom.max.setDefaultValue(1.5 * 4);
-    subComponent.zRotation.bind(rotZRandom.value);
-    subComponent.xTranslation.bind(transXRandom.value);
-    subComponent.yTranslation.bind(transYRandom.value);
+    subComponent.rotationZ.bind(rotZRandom.value);
+    subComponent.translationX.bind(transXRandom.value);
+    subComponent.translationY.bind(transYRandom.value);
 
     // bottom layer
     let sprite = new Sprite(p);
@@ -110,6 +107,6 @@ export class Basic04 implements QuartzComposition {
     zPosInterp.interpolationType.setDefaultValue(InterpolationType.Linear);
 
     sprite.color.bind(hslColor.color);
-    sprite.zPosition.bind(zPosInterp.result);
+    sprite.positionZ.bind(zPosInterp.result);
   }
 }

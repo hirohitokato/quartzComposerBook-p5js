@@ -37,8 +37,8 @@ export class Basic03 implements QuartzComposition {
 
     let xPosLfo = new WaveGenerator(p);
     let yPosLfo = new WaveGenerator(p);
-    sprite.xPosition.bind(xPosLfo.result);
-    sprite.yPosition.bind(yPosLfo.result);
+    sprite.positionX.bind(xPosLfo.result);
+    sprite.positionY.bind(yPosLfo.result);
     xPosLfo.type.setDefaultValue(WaveType.Cos);
     xPosLfo.period.setDefaultValue(4);
     xPosLfo.amplitude.setDefaultValue(0.1);

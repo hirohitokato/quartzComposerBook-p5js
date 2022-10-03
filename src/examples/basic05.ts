@@ -1,16 +1,13 @@
 import p5 from "p5";
 import { QuartzComposition } from "../quartzComposition";
 import { Consumer } from "../quartz-composer/core/consumer";
+import { InterpolationType } from "../quartz-composer/core/tween";
 import { Gradient, GradientDirection } from "../quartz-composer/consumer/gradient";
 import { Image } from "../quartz-composer/provider/image";
 import { Sprite } from "../quartz-composer/consumer/sprite";
 import { Transformation3D } from "../quartz-composer/consumer/3DTransformation";
 import { MathOperation, MathOperator } from "../quartz-composer/processor/math";
-import {
-  Interpolation,
-  InterpolationType,
-  RepeatMode,
-} from "../quartz-composer/provider/interpolation";
+import { Interpolation, RepeatMode } from "../quartz-composer/provider/interpolation";
 import { PatchTime } from "../quartz-composer/provider/patchTime";
 import { WaveGenerator, WaveType } from "../quartz-composer/provider/lfo";
 import { Iterator } from "../quartz-composer/consumer/iterator";
@@ -46,7 +43,7 @@ export class Basic05 implements QuartzComposition {
     topComponent.layer = 2;
     consumers.push(topComponent);
     let topLfo = new WaveGenerator(p);
-    topComponent.zRotation.bind(topLfo.result);
+    topComponent.rotationZ.bind(topLfo.result);
     topLfo.type.setDefaultValue(WaveType.Sin);
     topLfo.period.setDefaultValue(10);
     topLfo.amplitude.setDefaultValue(15);
@@ -82,7 +79,7 @@ export class Basic05 implements QuartzComposition {
     wave.widthScale.setDefaultValue(4);
     wave.heightScale.setDefaultValue(0.9);
     let waveLfo = new WaveGenerator(p);
-    wave.yPosition.bind(waveLfo.result);
+    wave.positionY.bind(waveLfo.result);
     waveLfo.type.setDefaultValue(WaveType.Sin);
     waveLfo.period.setDefaultValue(6);
     waveLfo.amplitude.setDefaultValue(0.05);
@@ -121,7 +118,7 @@ export class Basic05 implements QuartzComposition {
     fishTransXInterp.duration.setDefaultValue(1);
     fishTransXInterp.repeatMode.setDefaultValue(RepeatMode.None);
     fishTransXInterp.interpolationType.setDefaultValue(InterpolationType.Linear);
-    fishComponent.xTranslation.bind(fishTransXInterp.result);
+    fishComponent.translationX.bind(fishTransXInterp.result);
 
     // bottom layer(fish)
     let fish = new Sprite(p);
@@ -134,7 +131,7 @@ export class Basic05 implements QuartzComposition {
     xPosInterp.endValue.setDefaultValue(2);
     xPosInterp.duration.setDefaultValue(6);
     xPosInterp.repeatMode.setDefaultValue(RepeatMode.Loop);
-    fish.xPosition.bind(xPosInterp.result);
+    fish.positionX.bind(xPosInterp.result);
 
     // カーブが山なりにできるようにする
     let yPosInterp = new Interpolation(p);
@@ -143,13 +140,13 @@ export class Basic05 implements QuartzComposition {
     yPosInterp.endValue.setDefaultValue(0.3);
     yPosInterp.duration.setDefaultValue(6);
     yPosInterp.repeatMode.setDefaultValue(RepeatMode.Loop);
-    fish.yPosition.bind(yPosInterp.result);
+    fish.positionY.bind(yPosInterp.result);
 
     let zRotInterp = new Interpolation(p);
     zRotInterp.startValue.setDefaultValue(45);
     zRotInterp.endValue.setDefaultValue(-45);
     zRotInterp.duration.setDefaultValue(6);
-    fish.zRotation.bind(zRotInterp.result);
+    fish.rotationZ.bind(zRotInterp.result);
 
     // カーブが山なりにできるようにする
     let alphaInterp = new Interpolation(p);

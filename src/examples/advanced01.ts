@@ -24,8 +24,8 @@ export class Advanced01 implements QuartzComposition {
     yRotInterp.startValue.setDefaultValue(0);
     yRotInterp.endValue.setDefaultValue(360);
     yRotInterp.duration.setDefaultValue(40);
-    topComponent.xRotation.bind(xRotInterp.result);
-    topComponent.yRotation.bind(yRotInterp.result);
+    topComponent.rotationX.bind(xRotInterp.result);
+    topComponent.rotationY.bind(yRotInterp.result);
     consumers.push(topComponent);
 
     // second layer

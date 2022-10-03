@@ -11,18 +11,18 @@ export class Cube implements Consumer {
   layer: number = 0;
 
   /** Position on the X-axis */
-  xPosition: BindableInput<number> = new BindableInput(0);
+  positionX: BindableInput<number> = new BindableInput(0);
   /** Position on the Y-axis */
-  yPosition: BindableInput<number> = new BindableInput(0);
+  positionY: BindableInput<number> = new BindableInput(0);
   /** Position on the Z-axis */
-  zPosition: BindableInput<number> = new BindableInput(0);
+  positionZ: BindableInput<number> = new BindableInput(0);
 
   /** Rotation on the X-axis */
-  xRotation: BindableInput<number> = new BindableInput(0);
+  rotationX: BindableInput<number> = new BindableInput(0);
   /** Rotation on the Y-axis */
-  yRotation: BindableInput<number> = new BindableInput(0);
+  rotationY: BindableInput<number> = new BindableInput(0);
   /** Rotation on the Z-axis */
-  zRotation: BindableInput<number> = new BindableInput(0);
+  rotationZ: BindableInput<number> = new BindableInput(0);
 
   /** The width of the cube */
   width: BindableInput<number> = new BindableInput(0);
@@ -72,9 +72,9 @@ export class Cube implements Consumer {
   }
 
   draw(atTime: number): void {
-    const x = this.xPosition.getValue(atTime) * (this.p.width / 2);
-    const y = this.yPosition.getValue(atTime) * -(this.p.height / 2);
-    const z = this.zPosition.getValue(atTime) * (this.p.height / 2);
+    const x = this.positionX.getValue(atTime) * (this.p.width / 2);
+    const y = this.positionY.getValue(atTime) * -(this.p.height / 2);
+    const z = this.positionZ.getValue(atTime) * (this.p.height / 2);
     const w = this.width.getValue(atTime) * (this.p.width / 2);
     const h = this.height.getValue(atTime) * (this.p.height / 2);
     const d = this.depth.getValue(atTime) * (this.p.height / 2);
@@ -94,9 +94,9 @@ export class Cube implements Consumer {
     const topImage = this.topImage.getValue(atTime);
     const bottomImage = this.bottomImage.getValue(atTime);
 
-    const xRotation = this.p.radians(this.xRotation.getValue(atTime));
-    const yRotation = this.p.radians(this.yRotation.getValue(atTime));
-    const zRotation = this.p.radians(-this.zRotation.getValue(atTime));
+    const xRotation = this.p.radians(this.rotationX.getValue(atTime));
+    const yRotation = this.p.radians(this.rotationY.getValue(atTime));
+    const zRotation = this.p.radians(-this.rotationZ.getValue(atTime));
 
     const planes = [
       // front
