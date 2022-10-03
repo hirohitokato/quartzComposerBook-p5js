@@ -1,7 +1,7 @@
 import p5 from "p5";
-import { BindableInput, BindableOutput } from "../core/bindable";
-import { Consumer } from "../core/consumer";
-import { InterpolationType } from "../core/tween";
+import { BindableInput, BindableOutput } from "../../core/bindable";
+import { Consumer } from "../../core/consumer";
+import { InterpolationType } from "../../core/tween";
 
 /**
  * This macro patch renders the specified number of copies of the subpatches,

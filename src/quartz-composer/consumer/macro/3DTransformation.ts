@@ -1,6 +1,6 @@
 import p5 from "p5";
-import { BindableInput } from "../core/bindable";
-import { Consumer } from "../core/consumer";
+import { BindableInput } from "../../core/bindable";
+import { Consumer } from "../../core/consumer";
 
 /**
  * This macro patch applies a 3D transformation to its subpatches:

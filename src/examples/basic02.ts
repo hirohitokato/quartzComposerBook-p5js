@@ -4,7 +4,7 @@ import { Consumer } from "../quartz-composer/core/consumer";
 import { Gradient, GradientDirection } from "../quartz-composer/consumer/gradient";
 import { Image } from "../quartz-composer/provider/image";
 import { Sprite } from "../quartz-composer/consumer/sprite";
-import { Transformation3D } from "../quartz-composer/consumer/3DTransformation";
+import { Transformation3D } from "../quartz-composer/consumer/macro/3DTransformation";
 import { MathOperation, MathOperator } from "../quartz-composer/processor/math";
 import { Round } from "../quartz-composer/processor/round";
 import { Interpolation, RepeatMode } from "../quartz-composer/provider/interpolation";

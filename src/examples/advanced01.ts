@@ -3,7 +3,7 @@ import { QuartzComposition } from "../quartzComposition";
 import { Consumer } from "../quartz-composer/core/consumer";
 import { Image } from "../quartz-composer/provider/image";
 import { Cube } from "../quartz-composer/consumer/cube";
-import { Transformation3D } from "../quartz-composer/consumer/3DTransformation";
+import { Transformation3D } from "../quartz-composer/consumer/macro/3DTransformation";
 import { Interpolation } from "../quartz-composer/provider/interpolation";
 
 let images: { [name: string]: Image } = {};

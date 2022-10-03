@@ -1,6 +1,6 @@
 import p5 from "p5";
-import { BindableInput, BindableOutput } from "../core/bindable";
-import { Consumer } from "../core/consumer";
+import { BindableInput, BindableOutput } from "../../core/bindable";
+import { Consumer } from "../../core/consumer";
 
 /**
  * This patch returns the current state of its parent Iterator patch.
