@@ -17,7 +17,7 @@ export type MipmappingType = typeof MipmappingType[keyof typeof MipmappingType];
 
 export class ImageData {
   /** The original image */
-  image: p5.Image;
+  image: p5.Image | p5.Graphics;
   filePath: string = "";
 
   /** The texture target */
@@ -36,7 +36,7 @@ export class ImageData {
   /** Translation amount on the Y-axis */
   matrixTranslationY: number = 0;
 
-  constructor(private p: p5, image: p5.Image) {
+  constructor(private p: p5, image: p5.Image | p5.Graphics) {
     this.image = image;
   }
 }
