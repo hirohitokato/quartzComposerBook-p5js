@@ -46,7 +46,7 @@ Supported patches are the following:
 * [X] Image Texturing Properties
 * [X] Cube
 * [ ] Replicate in Space X/Y/Z
-* [ ] Image with String
+* [X] Image with String
 * [ ] etc.
 
 ## How to change the target composition
