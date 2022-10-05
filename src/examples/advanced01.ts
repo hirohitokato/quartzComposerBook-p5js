@@ -5,12 +5,16 @@ import { Image } from "../quartz-composer/provider/image";
 import { Cube } from "../quartz-composer/consumer/cube";
 import { Transformation3D } from "../quartz-composer/consumer/macro/3DTransformation";
 import { Interpolation } from "../quartz-composer/provider/interpolation";
+import { ImageWithString } from "../quartz-composer/provider/imageWithString";
+import { Sprite } from "../quartz-composer/consumer/sprite";
 
 let images: { [name: string]: Image } = {};
+let fonts: { [name: string]: p5.Font } = {};
 
 export class Advanced01 implements QuartzComposition {
   preload(p: p5) {
     images["wall"] = new Image(p, "assets/chapter3/advanced_01/wall_256x256.png");
+    fonts["roboto"] = p.loadFont("assets/fonts/Roboto-Regular.ttf");
   }
 
   setup(p: p5, consumers: Consumer[]) {
@@ -30,6 +34,7 @@ export class Advanced01 implements QuartzComposition {
 
     // second layer
     let cube = new Cube(p);
+    cube.layer = 1;
     topComponent.addConsumer(cube);
     cube.width.setDefaultValue(3.5);
     cube.height.setDefaultValue(3.5);
@@ -46,5 +51,12 @@ export class Advanced01 implements QuartzComposition {
     cube.topColor.setDefaultValue(p.color("#820000"));
     cube.bottomImage.bind(images["wall"]!.image);
     cube.bottomColor.setDefaultValue(p.color("#820000"));
+
+    let sprite = new Sprite(p);
+    sprite.layer = 2;
+    topComponent.addConsumer(sprite);
+    let text = new ImageWithString(p, fonts);
+    text.fontName.setDefaultValue("roboto");
+    sprite.image.bind(text.image);
   }
 }
