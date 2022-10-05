@@ -83,29 +83,7 @@ export class ImageWithString implements Provider {
     if (text == this._cachedText && this._cachedImage) {
       return this._cachedImage;
     }
-    const fontSize = this.fontSize.getValue(t) * this.p.height;
-    const fontName = this.fontName.getValue(t);
-    const font = this.fonts[fontName]!;
-
-    let bbox: Obj = font.textBounds(text, 0, 0, fontSize);
-
-    let offscreenCanvas = this.p.createGraphics(bbox.w, bbox.h);
-    offscreenCanvas.stroke(255,255,0);
-    offscreenCanvas.textFont(font);
-    offscreenCanvas.fill(255, 255, 255);
-    offscreenCanvas.textSize(fontSize);
-    offscreenCanvas.text(text, 0, bbox.h);
-
-    // TODO 画像として文字列を返す、キャッシュを更新する
-
-    this.displayWidth.updateInitialValue(bbox.w);
-    this.displayHeight.updateInitialValue(bbox.h);
-
-    let imageData = new ImageData(this.p, offscreenCanvas);
-    imageData.filePath = "(image from canvas)";
-
-    this._cachedText = text;
-    this._cachedImage = imageData;
+    const imageData = this._createImageData(t, text);
 
     return imageData;
   }
@@ -125,5 +103,34 @@ export class ImageWithString implements Provider {
     }
     return -1;
   }
-  // private _createImageData(t: number): ImageData {}
+
+  private _createImageData(t: number, text: string): ImageData {
+    const fontSize = this.fontSize.getValue(t) * this.p.height;
+    const fontName = this.fontName.getValue(t);
+    const font = this.fonts[fontName]!;
+
+    // TODO: change the box size if displayWidth/Height is non-zero.
+    let bbox: Obj = font.textBounds(text, 0, 0, fontSize);
+
+    let offscreenCanvas = this.p.createGraphics(bbox.w, bbox.h);
+    offscreenCanvas.background("rgba(100%,0%,100%,0.0)");
+
+    offscreenCanvas.stroke(255, 255, 0);
+    offscreenCanvas.textFont(font);
+    offscreenCanvas.fill(255, 255, 255);
+    offscreenCanvas.textAlign(this.p.CENTER);
+    offscreenCanvas.textSize(fontSize);
+    offscreenCanvas.text(text, bbox.w / 2, bbox.h);
+
+    this.displayWidth.updateInitialValue(bbox.w);
+    this.displayHeight.updateInitialValue(bbox.h);
+
+    let imageData = new ImageData(this.p, offscreenCanvas);
+    imageData.filePath = "(image from canvas)";
+
+    this._cachedText = text;
+    this._cachedImage = imageData;
+
+    return imageData;
+  }
 }
