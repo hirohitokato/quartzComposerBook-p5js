@@ -18,7 +18,7 @@ export class SetupTmp implements QuartzComposition {
   setup(p: p5, consumers: Consumer[]) {
     let gradient = new Gradient(p);
     consumers.push(gradient);
-    gradient.layer = 1;
+    gradient.layer = 0;
     gradient.direction = GradientDirection.Vertical_Upside;
     gradient.color1.setDefaultValue(p.color(83, 83, 83));
     gradient.color2.setDefaultValue(p.color(131, 131, 131));
