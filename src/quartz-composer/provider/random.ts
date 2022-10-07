@@ -20,6 +20,9 @@ export class Random implements Provider {
 
   private _offset: number;
 
+  private _cachedTime = -1;
+  private _cachedNumber = 0;
+
   constructor(private p: p5) {
     this.value.onRequestedValue = this.onRequestedValue.bind(this);
     this._offset = p.random(0, 1000);
@@ -33,8 +36,13 @@ export class Random implements Provider {
       let x = this.p.noise(patchTime + this._offset);
       x = (max - min) * x + min;
       return x;
-    } else {
-      return this.p.random(min, max);
     }
+    if (elapsed == this._cachedTime) {
+      return this._cachedNumber;
+    }
+
+    this._cachedTime = elapsed;
+    this._cachedNumber = this.p.random(min, max);
+    return this._cachedNumber;
   }
 }
