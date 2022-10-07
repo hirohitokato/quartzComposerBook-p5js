@@ -116,7 +116,7 @@ export class ImageWithString implements Provider {
     offscreenCanvas.background(255, 0); // transparent
     offscreenCanvas.stroke(255, 255, 255);
     offscreenCanvas.textFont(font);
-    offscreenCanvas.fill(255, 255, 0);
+    offscreenCanvas.fill(255, 255, 255);
     offscreenCanvas.textAlign(this.p.CENTER);
     offscreenCanvas.textSize(fontSize);
     offscreenCanvas.text(text, bbox.w / 2, bbox.h);
