@@ -36,7 +36,7 @@ interface Obj {
  */
 export class ImageWithString implements Provider {
   /** The text string to render */
-  textString: BindableInput<string> = new BindableInput("Hello world!");
+  textString: BindableInput<string | number> = new BindableInput("Hello world!");
   /** The name of font to use to render the text */
   fontName: BindableInput<string> = new BindableInput("LucidaGrande");
   /** The size of the font glyphs */
@@ -75,11 +75,11 @@ export class ImageWithString implements Provider {
     this.displayWidth.onRequestedValue = this._onRequestedDisplayWidth.bind(this);
     this.displayHeight.onRequestedValue = this._onRequestedDisplayHeight.bind(this);
 
-    this._cachedText = this.textString.getValue(0);
+    this._cachedText = this.textString.getValue(0).toString();
   }
 
   private _onRequestedImageData(t: number): ImageData {
-    const text = this.textString.getValue(t);
+    let text = this.textString.getValue(t).toString();
     if (text == this._cachedText && this._cachedImage) {
       return this._cachedImage;
     }

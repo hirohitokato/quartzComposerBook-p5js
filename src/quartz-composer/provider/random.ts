@@ -26,11 +26,11 @@ export class Random implements Provider {
   }
 
   private onRequestedValue(elapsed: number): number {
-    const patchTime = this.patchTime.getValue(elapsed) + this._offset;
+    const patchTime = this.patchTime.getValue(elapsed);
     const min = this.min.getValue(elapsed);
     const max = this.max.getValue(elapsed);
     if (patchTime != -1) {
-      let x = this.p.noise(patchTime);
+      let x = this.p.noise(patchTime + this._offset);
       x = (max - min) * x + min;
       return x;
     } else {

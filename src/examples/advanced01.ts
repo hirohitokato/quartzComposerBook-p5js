@@ -7,6 +7,9 @@ import { Transformation3D } from "../quartz-composer/consumer/macro/3DTransforma
 import { Interpolation } from "../quartz-composer/provider/interpolation";
 import { ImageWithString } from "../quartz-composer/provider/imageWithString";
 import { Sprite } from "../quartz-composer/consumer/sprite";
+import { ReplicateInSpace } from "../quartz-composer/consumer/macro/replicateInSpace";
+import { Random } from "../quartz-composer/provider/random";
+import { Round } from "../quartz-composer/processor/round";
 
 let images: { [name: string]: Image } = {};
 let fonts: { [name: string]: p5.Font } = {};
@@ -32,6 +35,12 @@ export class Advanced01 implements QuartzComposition {
     topComponent.rotationY.bind(yRotInterp.result);
     consumers.push(topComponent);
 
+    let replicateZ = new ReplicateInSpace(p);
+    topComponent.addConsumer(replicateZ);
+    replicateZ.copies.setDefaultValue(5);
+    replicateZ.originZ.setDefaultValue(-1);
+    replicateZ.finalTranslationZ.setDefaultValue(2);
+
     // second layer
     let cube = new Cube(p);
     cube.layer = 1;
@@ -52,10 +61,33 @@ export class Advanced01 implements QuartzComposition {
     cube.bottomImage.bind(images["wall"]!.image);
     cube.bottomColor.setDefaultValue(p.color("#820000"));
 
+    // third layer
+    let replicateY = new ReplicateInSpace(p);
+    replicateZ.addConsumer(replicateY);
+    replicateY.copies.setDefaultValue(5);
+    replicateY.originY.setDefaultValue(-1);
+    replicateY.finalTranslationY.setDefaultValue(2);
+
+    // forth layer
+    let replicateX = new ReplicateInSpace(p);
+    replicateY.addConsumer(replicateX);
+    replicateX.copies.setDefaultValue(5);
+    replicateX.originX.setDefaultValue(-1);
+    replicateX.finalTranslationX.setDefaultValue(2);
+
+    // bottom layer
+    let random = new Random(p);
+    random.min.setDefaultValue(1000);
+    random.max.setDefaultValue(9999);
+
+    let round = new Round(p);
+    round.value.bind(random.value);
+
     let sprite = new Sprite(p);
     sprite.layer = 2;
-    topComponent.addConsumer(sprite);
+    replicateX.addConsumer(sprite);
     let text = new ImageWithString(p, fonts);
+    text.textString.bind(round.roundedValue);
     text.fontName.setDefaultValue("roboto");
     sprite.image.bind(text.image);
   }

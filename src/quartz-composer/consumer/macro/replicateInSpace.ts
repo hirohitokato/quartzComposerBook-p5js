@@ -75,7 +75,42 @@ export class ReplicateInSpace implements Consumer {
 
   draw(atTime: number): void {
     const num_copies = this.copies.getValue(atTime);
+    const originX = this.originX.getValue(atTime) * (this.p.width / 2);
+    const originY = this.originY.getValue(atTime) * -(this.p.height / 2);
+    const originZ = (this.originZ.getValue(atTime) * this.p.height) / 2 / this.p.tan(this.p.PI / 6);
 
-    throw new Error("Method not implemented.");
+    const toX = this.finalTranslationX.getValue(atTime) * (this.p.width / 2);
+    const toY = this.finalTranslationY.getValue(atTime) * -(this.p.height / 2);
+    const toZ =
+      (this.finalTranslationZ.getValue(atTime) * this.p.height) / 2 / this.p.tan(this.p.PI / 6);
+    const toRotX = this.finalRotationX.getValue(atTime);
+    const toRotY = this.finalRotationY.getValue(atTime);
+    const toRotZ = this.finalRotationZ.getValue(atTime);
+
+    this.p.push();
+    this.p.translate(originX, originY, this.layer + originZ);
+
+    for (let i = 0; i <= num_copies; i++) {
+      const progress = i / num_copies;
+      const tx = toX * progress;
+      const ty = toY * progress;
+      const tz = toZ * progress;
+      const rx = toRotX * progress;
+      const ry = toRotY * progress;
+      const rz = toRotZ * progress;
+
+      this.p.push();
+      this.p.translate(tx, ty, tz);
+      this.p.rotateZ(rz);
+      this.p.rotateY(ry);
+      this.p.rotateX(rx);
+
+      for (const consumer of this._subConsumers) {
+        consumer.draw(atTime);
+      }
+      this.p.pop();
+    }
+
+    this.p.pop();
   }
 }
