@@ -3,7 +3,7 @@ import { BindableInput, BindableOutput } from "../core/bindable";
 import { Operator } from "../core/operator";
 
 /**
- * This patch performs as a passthrough between intercepted input/output.
+ * This patch performs as a tunnel patch through the intercepted input/output.
  * This might be useful for debugging.
  */
 export class Passthrough<T> implements Operator {
