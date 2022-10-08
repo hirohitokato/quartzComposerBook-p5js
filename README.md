@@ -45,8 +45,9 @@ Supported patches are the following:
 * [X] HSL Color
 * [X] Image Texturing Properties
 * [X] Cube
-* [ ] Replicate in Space X/Y/Z
+* [X] Replicate in Space X/Y/Z
 * [X] Image with String
+* [ ] Multiplexer
 * [ ] etc.
 
 ## How to change the target composition
