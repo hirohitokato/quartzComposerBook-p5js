@@ -157,8 +157,8 @@ export class Cube implements Consumer {
 
     this.p.push();
     this.p.rotateZ(zRotation);
-    this.p.rotateX(xRotation);
     this.p.rotateY(yRotation);
+    this.p.rotateX(xRotation);
 
     for (const plane of planes) {
       this.drawPlane(plane.a, plane.b, plane.c, plane.d, plane.color, plane.image);

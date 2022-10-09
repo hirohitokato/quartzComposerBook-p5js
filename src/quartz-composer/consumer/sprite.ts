@@ -51,8 +51,6 @@ export class Sprite implements Consumer {
   draw(elapsed: number) {
     const x = this.positionX.getValue(elapsed) * (this.p.width / 2);
     const y = this.positionY.getValue(elapsed) * -(this.p.height / 2);
-    // const x = 0;
-    // const y=0;
     const z = this.positionZ.getValue(elapsed) * (this.p.height / 2);
 
     const xRotation = this.p.radians(this.rotationX.getValue(elapsed));
@@ -64,8 +62,8 @@ export class Sprite implements Consumer {
     this.p.push();
     this.p.translate(x, y, this.layer + z);
     this.p.rotateZ(zRotation);
-    this.p.rotateX(xRotation);
     this.p.rotateY(yRotation);
+    this.p.rotateX(xRotation);
 
     this.p.blendMode(this.p.BLEND);
     this.p.tint(tintColor);

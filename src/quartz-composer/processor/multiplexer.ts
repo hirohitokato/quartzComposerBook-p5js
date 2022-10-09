@@ -35,7 +35,17 @@ export class Multiplexer<T> implements Operator {
   /** An Array of generic input ports */
   sources: BindableInput<T>[] = [];
 
-  constructor(private p: p5) {}
+  output: BindableOutput<T> = new BindableOutput(null!);
+
+  constructor(private p: p5, num_sources: number) {
+    this.output.onRequestedValue = this._chooseData.bind(this);
+    this.number_of_sources = num_sources;
+  }
+
+  private _chooseData(t: number): T {
+    const index = this.sourceIndex.getValue(t);
+    return this.sources[index]!.getValue(t);
+  }
 
   private static _move<T>(
     array: BindableInput<T>[],
