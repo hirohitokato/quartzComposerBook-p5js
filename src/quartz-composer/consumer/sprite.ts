@@ -76,8 +76,9 @@ export class Sprite implements Consumer {
     const imageData = this.image.getValue(elapsed);
     const image = imageData.image;
 
-    const w = image.width * this.widthScale.getValue(elapsed);
-    const h = image.height * this.heightScale.getValue(elapsed);
+    const sizeUnit = this.p.width / 2;
+    const w = sizeUnit * this.widthScale.getValue(elapsed);
+    const h = sizeUnit * this.heightScale.getValue(elapsed);
     const uOffset = imageData.matrixTranslationX;
     const vOffset = imageData.matrixTranslationY;
 
