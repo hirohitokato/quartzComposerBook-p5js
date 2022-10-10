@@ -49,9 +49,11 @@ export class Sprite implements Consumer {
   updateValue() {}
 
   draw(elapsed: number) {
-    const x = this.positionX.getValue(elapsed) * (this.p.width / 2);
-    const y = this.positionY.getValue(elapsed) * -(this.p.height / 2);
-    const z = this.positionZ.getValue(elapsed) * (this.p.height / 2);
+    const sizeUnit = this.p.width / 2;
+
+    const x = this.positionX.getValue(elapsed) * sizeUnit;
+    const y = this.positionY.getValue(elapsed) * -sizeUnit;
+    const z = this.positionZ.getValue(elapsed) * sizeUnit;
 
     const xRotation = this.p.radians(this.rotationX.getValue(elapsed));
     const yRotation = this.p.radians(this.rotationY.getValue(elapsed));
@@ -76,7 +78,6 @@ export class Sprite implements Consumer {
     const imageData = this.image.getValue(elapsed);
     const image = imageData.image;
 
-    const sizeUnit = this.p.width / 2;
     const w = sizeUnit * this.widthScale.getValue(elapsed);
     const h = sizeUnit * this.heightScale.getValue(elapsed);
     const uOffset = imageData.matrixTranslationX;

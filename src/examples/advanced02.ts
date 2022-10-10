@@ -40,6 +40,11 @@ export class Advanced02 implements QuartzComposition {
     light.widthScale.setDefaultValue(3);
     light.heightScale.setDefaultValue(4);
     consumers.push(light);
+    let s = p.createSlider(45, 135, 90, 1);
+    s.elt.onchange = () => {
+      console.log(s.value());
+      light.rotationX.setDefaultValue(Number(s.value()));
+    };
 
     let multiplexer = new Multiplexer<ImageData>(p, 6);
     multiplexer.sources[0]!.bind(images["blur"]!.image);
@@ -54,8 +59,8 @@ export class Advanced02 implements QuartzComposition {
     sprite.layer = 3;
     sprite.image.bind(multiplexer.output);
     sprite.positionZ.setDefaultValue(-2);
-    sprite.widthScale.setDefaultValue(1.6);
-    sprite.heightScale.setDefaultValue(1.2);
-    // consumers.push(sprite);
+    // sprite.widthScale.setDefaultValue(1.6);
+    // sprite.heightScale.setDefaultValue(1.2);
+    consumers.push(sprite);
   }
 }
