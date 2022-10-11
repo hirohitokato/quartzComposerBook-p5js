@@ -82,7 +82,6 @@ export class Sprite implements Consumer {
     const h = sizeUnit * this.heightScale.getValue(elapsed);
     const uOffset = imageData.matrixTranslationX;
     const vOffset = imageData.matrixTranslationY;
-
     this.p.texture(image);
 
     if (uOffset != 0 || vOffset != 0) {

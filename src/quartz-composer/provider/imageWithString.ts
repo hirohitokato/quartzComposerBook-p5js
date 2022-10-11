@@ -91,7 +91,7 @@ export class ImageWithString implements Provider {
   private _onRequestedDisplayWidth(t: number): number {
     const text = this.textString.getValue(t);
     if (text == this._cachedText && this._cachedImage) {
-      return this._cachedImage.image.width;
+      return this._cachedImage.image.width / this.p.width;
     }
     return -1;
   }
@@ -99,13 +99,13 @@ export class ImageWithString implements Provider {
   private _onRequestedDisplayHeight(t: number): number {
     const text = this.textString.getValue(t);
     if (text == this._cachedText && this._cachedImage) {
-      return this._cachedImage.image.height;
+      return this._cachedImage.image.height / this.p.width;
     }
     return -1;
   }
 
   private _createImageData(t: number, text: string): ImageData {
-    const fontSize = this.fontSize.getValue(t) * this.p.height;
+    const fontSize = this.fontSize.getValue(t) * this.p.width;
     const fontName = this.fontName.getValue(t);
     const font = this.fonts[fontName]!;
 
@@ -120,9 +120,6 @@ export class ImageWithString implements Provider {
     offscreenCanvas.textAlign(this.p.CENTER);
     offscreenCanvas.textSize(fontSize);
     offscreenCanvas.text(text, bbox.w / 2, bbox.h);
-
-    this.displayWidth.updateInitialValue(bbox.w);
-    this.displayHeight.updateInitialValue(bbox.h);
 
     let imageData = new ImageData(this.p, offscreenCanvas);
     imageData.filePath = "(image from canvas)";
