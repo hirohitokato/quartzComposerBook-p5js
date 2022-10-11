@@ -49,7 +49,7 @@ export class Sprite implements Consumer {
   updateValue() {}
 
   draw(elapsed: number) {
-    const sizeUnit = this.p.width / 2;
+    const sizeUnit = this.p.width;
 
     const x = this.positionX.getValue(elapsed) * sizeUnit;
     const y = this.positionY.getValue(elapsed) * -sizeUnit;

@@ -75,12 +75,12 @@ export class ReplicateInSpace implements Consumer {
 
   draw(atTime: number): void {
     const num_copies = this.copies.getValue(atTime);
-    const originX = this.originX.getValue(atTime) * (this.p.width / 2);
-    const originY = this.originY.getValue(atTime) * -(this.p.height / 2);
+    const originX = this.originX.getValue(atTime) * this.p.width;
+    const originY = this.originY.getValue(atTime) * -this.p.width;
     const originZ = (this.originZ.getValue(atTime) * this.p.height) / 2 / this.p.tan(this.p.PI / 6);
 
-    const toX = this.finalTranslationX.getValue(atTime) * (this.p.width / 2);
-    const toY = this.finalTranslationY.getValue(atTime) * -(this.p.height / 2);
+    const toX = this.finalTranslationX.getValue(atTime) * this.p.width;
+    const toY = this.finalTranslationY.getValue(atTime) * -this.p.width;
     const toZ =
       (this.finalTranslationZ.getValue(atTime) * this.p.height) / 2 / this.p.tan(this.p.PI / 6);
     const toRotX = this.finalRotationX.getValue(atTime);

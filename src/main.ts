@@ -12,7 +12,7 @@ import { Basic05 } from "./examples/basic05";
 import { Advanced01 } from "./examples/advanced01";
 import { Advanced02 } from "./examples/advanced02";
 
-setTargetComposition(new Advanced02());
+setTargetComposition(new Basic04());
 
 const sketch = createSketch({
   setup,

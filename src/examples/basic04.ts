@@ -74,11 +74,11 @@ export class Basic04 implements QuartzComposition {
     rotZRandom.min.setDefaultValue(0);
     rotZRandom.max.setDefaultValue(60);
     transXRandom.patchTime.bind(iterator.iteratorVariables.currentIndex);
-    transXRandom.min.setDefaultValue(-2 * 4);
-    transXRandom.max.setDefaultValue(2 * 4);
+    transXRandom.min.setDefaultValue(-2);
+    transXRandom.max.setDefaultValue(2);
     transYRandom.patchTime.bind(iterator.iteratorVariables.currentIndex);
-    transYRandom.min.setDefaultValue(-1.5 * 4);
-    transYRandom.max.setDefaultValue(1.5 * 4);
+    transYRandom.min.setDefaultValue(-1.5);
+    transYRandom.max.setDefaultValue(1.5);
     subComponent.rotationZ.bind(rotZRandom.value);
     subComponent.translationX.bind(transXRandom.value);
     subComponent.translationY.bind(transYRandom.value);
@@ -87,6 +87,8 @@ export class Basic04 implements QuartzComposition {
     let sprite = new Sprite(p);
     sprite.layer = 1;
     sprite.image.bind(images["Nautilus"]!.image);
+    sprite.widthScale.setDefaultValue(0.5);
+    sprite.heightScale.setDefaultValue(0.5);
     subComponent.addConsumer(sprite);
 
     let alphaInterp = new Interpolation(p);
@@ -100,8 +102,8 @@ export class Basic04 implements QuartzComposition {
     hslColor.alpha.bind(alphaInterp.result);
 
     let zPosInterp = new Interpolation(p);
-    zPosInterp.startValue.setDefaultValue(-10);
-    zPosInterp.endValue.setDefaultValue(1);
+    zPosInterp.startValue.setDefaultValue(-3);
+    zPosInterp.endValue.setDefaultValue(1.5);
     zPosInterp.duration.setDefaultValue(5);
     zPosInterp.repeatMode.setDefaultValue(RepeatMode.Loop);
     zPosInterp.interpolationType.setDefaultValue(InterpolationType.Linear);

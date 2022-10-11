@@ -72,12 +72,12 @@ export class Cube implements Consumer {
   }
 
   draw(atTime: number): void {
-    const x = this.positionX.getValue(atTime) * (this.p.width / 2);
-    const y = this.positionY.getValue(atTime) * -(this.p.height / 2);
-    const z = this.positionZ.getValue(atTime) * (this.p.height / 2);
-    const w = this.width.getValue(atTime) * (this.p.width / 2);
-    const h = this.height.getValue(atTime) * (this.p.height / 2);
-    const d = this.depth.getValue(atTime) * (this.p.height / 2);
+    const x = this.positionX.getValue(atTime) * this.p.width;
+    const y = this.positionY.getValue(atTime) * -this.p.width;
+    const z = this.positionZ.getValue(atTime) * this.p.width;
+    const w = this.width.getValue(atTime) * this.p.width;
+    const h = this.height.getValue(atTime) * this.p.width;
+    const d = this.depth.getValue(atTime) * this.p.width;
     const w2 = w / 2;
     const h2 = h / 2;
     const d2 = d / 2;

@@ -36,13 +36,16 @@ export class Advanced02 implements QuartzComposition {
     light.image.bind(images["light"]!.image);
     light.positionY.setDefaultValue(-0.65);
     light.positionZ.setDefaultValue(-2.5);
-    light.rotationX.setDefaultValue(90);
+    light.rotationX.setDefaultValue(98); // the expected value is 90
     light.widthScale.setDefaultValue(3);
     light.heightScale.setDefaultValue(4);
     consumers.push(light);
+
+    let infoP = p.createP();
+    infoP.position(10, 370);
     let s = p.createSlider(45, 135, 90, 1);
     s.elt.onchange = () => {
-      console.log(s.value());
+      infoP.html("(" + s.value() + ")");
       light.rotationX.setDefaultValue(Number(s.value()));
     };
 
@@ -59,8 +62,8 @@ export class Advanced02 implements QuartzComposition {
     sprite.layer = 3;
     sprite.image.bind(multiplexer.output);
     sprite.positionZ.setDefaultValue(-2);
-    // sprite.widthScale.setDefaultValue(1.6);
-    // sprite.heightScale.setDefaultValue(1.2);
+    sprite.widthScale.setDefaultValue(1.6);
+    sprite.heightScale.setDefaultValue(1.2);
     consumers.push(sprite);
   }
 }
