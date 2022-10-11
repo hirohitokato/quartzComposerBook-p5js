@@ -90,5 +90,7 @@ export class Advanced01 implements QuartzComposition {
     text.textString.bind(round.roundedValue);
     text.fontName.setDefaultValue("roboto");
     sprite.image.bind(text.image);
+    sprite.widthScale.bind(text.displayWidth);
+    sprite.heightScale.bind(text.displayHeight);
   }
 }

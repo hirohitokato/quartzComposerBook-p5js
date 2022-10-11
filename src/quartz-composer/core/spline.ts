@@ -102,7 +102,7 @@ export class Spline {
     const a = this.ks[i - 1]! * (this.xs[i]! - this.xs[i - 1]!) - (this.ys[i]! - this.ys[i - 1]!);
     const b = -this.ks[i]! * (this.xs[i]! - this.xs[i - 1]!) + (this.ys[i]! - this.ys[i - 1]!);
     const q = (1 - t) * this.ys[i - 1]! + t * this.ys[i]! + t * (1 - t) * (a * (1 - t) + b * t);
-    console.log(`${x}),${q}`);
+    // console.log(`${x}),${q}`);
     return q;
   }
 }
