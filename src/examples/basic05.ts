@@ -76,8 +76,8 @@ export class Basic05 implements QuartzComposition {
     let wave = new Sprite(p);
     wave.layer = 1;
     waveComponent.addConsumer(wave);
-    wave.widthScale.setDefaultValue(4);
-    wave.heightScale.setDefaultValue(0.9);
+    wave.widthScale.setDefaultValue(8);
+    wave.heightScale.setDefaultValue(0.4);
     let waveLfo = new WaveGenerator(p);
     wave.positionY.bind(waveLfo.result);
     waveLfo.type.setDefaultValue(WaveType.Sin);
@@ -124,6 +124,8 @@ export class Basic05 implements QuartzComposition {
     let fish = new Sprite(p);
     fish.layer = 1;
     fish.image.bind(images["Fish"]?.image!);
+    fish.widthScale.setDefaultValue(0.5);
+    fish.heightScale.setDefaultValue(0.5);
     fishComponent.addConsumer(fish);
 
     let xPosInterp = new Interpolation(p);
