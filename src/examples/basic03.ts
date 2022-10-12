@@ -10,6 +10,7 @@ import { Interpolation } from "../quartz-composer/provider/interpolation";
 import { PatchTime } from "../quartz-composer/provider/patchTime";
 import { WaveGenerator, WaveType } from "../quartz-composer/provider/lfo";
 import { Iterator } from "../quartz-composer/consumer/macro/iterator";
+import { Spline } from "../quartz-composer/core/spline";
 
 let images: { [name: string]: Image } = {};
 
@@ -19,6 +20,8 @@ export class Basic03 implements QuartzComposition {
   }
 
   setup(p: p5, consumers: Consumer[]) {
+    let spline = new Spline([0, 0.5, 1], [0, 1, 0]);
+
     let gradient = new Gradient(p);
     consumers.push(gradient);
     gradient.layer = 1;
@@ -65,6 +68,7 @@ export class Basic03 implements QuartzComposition {
     trilobiteParts.patchTime.bind(sum.result);
 
     let interp = new Interpolation(p);
+    interp.setCustomCurve(spline.at.bind(spline));
     interp.patchTime.bind(trilobite.iteratorVariables.currentPosition);
     interp.startValue.setDefaultValue(0.5);
     interp.endValue.setDefaultValue(1.2);
