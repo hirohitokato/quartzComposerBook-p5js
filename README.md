@@ -47,7 +47,7 @@ Supported patches are the following:
 * [X] Cube
 * [X] Replicate in Space X/Y/Z
 * [X] Image with String
-* [ ] Multiplexer
+* [X] Multiplexer
 * [ ] etc.
 
 ## How to change the target composition
