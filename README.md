@@ -7,8 +7,8 @@ This is p5.js implementations of sample codes explained in [Quarts Composer Book
 You can write the following composition as follows:
 
 ```ts
-```
 
+```
 
 ## Setup
 
@@ -30,25 +30,28 @@ Then, open `dist/index.html` via any browser. ([Live Server vscode plugin](https
 
 Supported patches are the following:
 
-* [X] Sprite
-* [X] Image
-* [X] LFO(Wave generator)
-* [X] Interpolation
-* [X] Gradient
-* [X] Patch Time
-* [X] Math
-* [X] Round
-* [X] Random
-* [X] 3D Transformation
-* [X] Iterator
-* [X] Iterator Variables
-* [X] HSL Color
-* [X] Image Texturing Properties
-* [X] Cube
-* [X] Replicate in Space X/Y/Z
-* [X] Image with String
-* [X] Multiplexer
-* [ ] etc.
+- [x] Sprite
+- [x] Image
+- [x] LFO(Wave generator)
+- [x] Interpolation
+- [x] Gradient
+- [x] Patch Time
+- [x] Math
+- [x] Round
+- [x] Random
+- [x] 3D Transformation
+- [x] Iterator
+- [x] Iterator Variables
+- [x] HSL Color
+- [x] Image Texturing Properties
+- [x] Cube
+- [x] Replicate in Space X/Y/Z
+- [x] Image with String
+- [x] Multiplexer
+- [ ]
+- [ ]
+- [ ]
+- [ ] etc.
 
 ## How to change the target composition
 
@@ -84,13 +87,13 @@ export class MyCustomComposition implements QuartzComposition {
 
 ## Notes
 
-* All assets are downloaded from [here](http://download.bnn.co.jp/download/qcb/).
-* This repository uses [p5.js Templates(PETR+)](https://fal-works.github.io/p5js-templates/).
+- All assets are downloaded from [here](http://download.bnn.co.jp/download/qcb/).
+- This repository uses [p5.js Templates(PETR+)](https://fal-works.github.io/p5js-templates/).
 
 ## Special thanks
 
-* Mamoru Kano, the author of the book.
-* [fal-works](https://www.fal-works.com)
+- Mamoru Kano, the author of the book.
+- [fal-works](https://www.fal-works.com)
 
 <!-- # p5.js Template PETR+
 
