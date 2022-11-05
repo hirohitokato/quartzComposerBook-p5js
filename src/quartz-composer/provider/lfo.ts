@@ -24,7 +24,7 @@ export type WaveType = typeof WaveType[keyof typeof WaveType];
  * (offset - amplitude) and (offset + amplitude).
  */
 export class WaveGenerator implements Provider {
-  /** 種類 */
+  /** The type of wave to generate */
   type: BindableInput<WaveType>;
   /** 周期 */
   period: BindableInput<number>;
@@ -52,6 +52,7 @@ export class WaveGenerator implements Provider {
 
     this.methods[WaveType.Sin] = this.sin.bind(this);
     this.methods[WaveType.Cos] = this.cos.bind(this);
+    this.methods[WaveType.PWM] = this.pwm.bind(this);
 
     this.result = new BindableOutput(0);
     this.result.onRequestedValue = (t) => {
@@ -77,5 +78,25 @@ export class WaveGenerator implements Provider {
 
     let y = Math.cos(elapsedTime * ((2 * Math.PI) / period) + phase);
     return y * amplitude + offset;
+  }
+
+  private pwm(elapsedTime: number): number {
+    const period = this.period.getValue(elapsedTime);
+    const amplitude = this.amplitude.getValue(elapsedTime);
+    const offset = this.offset.getValue(elapsedTime);
+    const pwmRatio = this.pwmRatio.getValue(elapsedTime);
+
+    let t = elapsedTime % period;
+    let value: number;
+
+    if (pwmRatio == 0.0) {
+      value = 0.0;
+    } else if (pwmRatio == 1.0) {
+      value = 1.0;
+    } else {
+      value = t > pwmRatio ? 1 : 0;
+    }
+
+    return value * amplitude + offset;
   }
 }
