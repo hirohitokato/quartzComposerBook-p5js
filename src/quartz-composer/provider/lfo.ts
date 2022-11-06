@@ -82,16 +82,15 @@ export class WaveGenerator implements Provider {
 
   private pwm(elapsedTime: number): number {
     const period = this.period.getValue(elapsedTime);
+    const phase = this.phase.getValue(elapsedTime);
     const amplitude = this.amplitude.getValue(elapsedTime);
     const offset = this.offset.getValue(elapsedTime);
     const pwmRatio = this.pwmRatio.getValue(elapsedTime);
 
-    let t = elapsedTime % period;
+    let t = (elapsedTime + phase) % period;
     let value: number;
 
-    if (pwmRatio == 0.0) {
-      value = 0.0;
-    } else if (pwmRatio == 1.0) {
+    if (pwmRatio == 1.0) {
       value = 1.0;
     } else {
       value = t > pwmRatio ? 1 : 0;
