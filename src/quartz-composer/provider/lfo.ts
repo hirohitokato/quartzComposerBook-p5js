@@ -48,10 +48,11 @@ export class WaveGenerator implements Provider {
     this.phase = new BindableInput(0);
     this.amplitude = new BindableInput(1);
     this.offset = new BindableInput(0);
-    this.pwmRatio = new BindableInput(0.25);
+    this.pwmRatio = new BindableInput(0.5);
 
     this.methods[WaveType.Sin] = this.sin.bind(this);
     this.methods[WaveType.Cos] = this.cos.bind(this);
+    this.methods[WaveType.Triangle] = this.triangle.bind(this);
     this.methods[WaveType.PWM] = this.pwm.bind(this);
 
     this.result = new BindableOutput(0);
@@ -87,13 +88,31 @@ export class WaveGenerator implements Provider {
     const offset = this.offset.getValue(elapsedTime);
     const pwmRatio = this.pwmRatio.getValue(elapsedTime);
 
-    let t = (elapsedTime + phase) % period;
+    let t = ((elapsedTime + phase) % period) / period; // 0.0-1.0
     let value: number;
 
     if (pwmRatio == 1.0) {
       value = 1.0;
     } else {
       value = t > pwmRatio ? 1 : 0;
+    }
+
+    return value * amplitude + offset;
+  }
+
+  private triangle(elapsedTime: number): number {
+    const period = this.period.getValue(elapsedTime);
+    const phase = this.phase.getValue(elapsedTime);
+    const amplitude = this.amplitude.getValue(elapsedTime);
+    const offset = this.offset.getValue(elapsedTime);
+
+    let t = ((elapsedTime + phase) % period) / period; // 0.0-1.0
+    let value: number;
+
+    if (t < 0.5) {
+      value = t * 2;
+    } else {
+      value = -t * 2 + 2;
     }
 
     return value * amplitude + offset;
