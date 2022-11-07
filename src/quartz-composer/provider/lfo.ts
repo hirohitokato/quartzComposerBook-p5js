@@ -54,6 +54,7 @@ export class WaveGenerator implements Provider {
     this.methods[WaveType.Cos] = this.cos.bind(this);
     this.methods[WaveType.Triangle] = this.triangle.bind(this);
     this.methods[WaveType.SwatoothUp] = this.sawtoothUp.bind(this);
+    this.methods[WaveType.SwatoothDown] = this.sawtoothDown.bind(this);
     this.methods[WaveType.PWM] = this.pwm.bind(this);
 
     this.result = new BindableOutput(0);
@@ -127,5 +128,15 @@ export class WaveGenerator implements Provider {
 
     let t = ((elapsedTime + phase) % period) / period; // 0.0-1.0
     return t * amplitude + offset;
+  }
+
+  private sawtoothDown(elapsedTime: number): number {
+    const period = this.period.getValue(elapsedTime);
+    const phase = this.phase.getValue(elapsedTime);
+    const amplitude = this.amplitude.getValue(elapsedTime);
+    const offset = this.offset.getValue(elapsedTime);
+
+    let t = ((elapsedTime + phase) % period) / period; // 0.0-1.0
+    return (1.0 - t) * amplitude + offset;
   }
 }
