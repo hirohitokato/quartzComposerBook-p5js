@@ -36,19 +36,19 @@ export class Basic01 implements QuartzComposition {
 
     let lfo_x = new WaveGenerator(p);
     lfo_x.type.setDefaultValue(WaveType.Sin);
-    lfo_x.period.setDefaultValue(10);
+    lfo_x.period.setDefaultValue(20);
     lfo_x.amplitude.setDefaultValue(0.5);
     volvox.positionX.bind(lfo_x.result);
 
     let lfo_y = new WaveGenerator(p);
     lfo_y.type.setDefaultValue(WaveType.Cos);
-    lfo_y.period.setDefaultValue(10);
+    lfo_y.period.setDefaultValue(20);
     lfo_y.amplitude.setDefaultValue(0.5);
     volvox.positionY.bind(lfo_y.result);
 
     let lfo_wh = new WaveGenerator(p);
     lfo_wh.type.setDefaultValue(WaveType.Sin);
-    lfo_wh.period.setDefaultValue(0.1);
+    lfo_wh.period.setDefaultValue(0.3);
     lfo_wh.amplitude.setDefaultValue(0.01);
     lfo_wh.offset.setDefaultValue(0.8);
     volvox.widthScale.bind(lfo_wh.result);
